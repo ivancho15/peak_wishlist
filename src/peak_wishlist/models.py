@@ -137,9 +137,9 @@ class Actividad(models.Model):
     observaciones = models.TextField(max_length=250, null=False, blank=False)
     costo_total = MoneyField(max_digits=10, decimal_places=2, null=True, blank=True)
     modalidad = models.CharField(choices=Modalidad.choices, max_length=15, null=False, blank=True)
-    estado = models.CharField(choices=Estado.choices, max_length=15, null=False, blank=True)
-    ruta = models.ForeignKey(Ruta, on_delete=models.PROTECT, null=False, blank=False)
-    proyecto = models.ForeignKey(Proyecto, on_delete=models.CASCADE, null=True, blank=True)
+    estado = models.CharField(choices=Estado.choices, max_length=20, null=False, blank=True)
+    ruta = models.ForeignKey(Ruta, on_delete=models.PROTECT, null=False, blank=False, related_name='salidas')
+    proyecto = models.ForeignKey(Proyecto, on_delete=models.CASCADE, null=True, blank=True, related_name='actividades')
     
 
     def __str__(self) -> str:
