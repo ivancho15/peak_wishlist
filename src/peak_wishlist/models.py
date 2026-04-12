@@ -66,7 +66,7 @@ class Refugio(models.Model):
     costo = MoneyField(max_digits=10, decimal_places=2, null=True, blank=True)
     telf_contacto = PhoneNumberField(null=True, blank=True)
     correo_contacto = models.EmailField(null=True, blank=True, max_length=50)
-    montana = models.ForeignKey(Montana, null=False, blank= False, on_delete=models.CASCADE)
+    montana = models.ForeignKey(Montana, null=False, blank= False, on_delete=models.CASCADE, verbose_name="montaña")
     
     def __str__(self) -> str:
         return  f"{self.nombre} - {self.montana.nombre}"
@@ -103,7 +103,7 @@ class Ruta(models.Model):
     distancia = models.DecimalField(max_digits=7, decimal_places=2, null=False, blank=False)
     desnivel_positivo = models.DecimalField(max_digits=7, decimal_places=2, null=False, blank=False)
     gps_trakking = models.URLField(max_length=100, null=False, blank=False)
-    montana = models.ForeignKey(Montana, null=False, blank= False, on_delete=models.CASCADE)
+    montana = models.ForeignKey(Montana, null=False, blank= False, on_delete=models.CASCADE, verbose_name="montaña")
     equipo_sugerido = models.TextField(max_length=250, null=False, blank=False)
     tiempo_estimado = models.IntegerField(null=False, blank= False)
     unidad_tiempo_estimado = models.CharField(choices=UnidadTiempo.choices, blank=False, null=False)
