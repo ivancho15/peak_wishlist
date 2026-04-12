@@ -12,7 +12,7 @@ class Pais(models.Model):
         ASIA = 'Asia'
 
     nombre = models.CharField(max_length= 50)
-    continente = models.CharField(max_length=8, choices=Continente.choices, null=False)
+    continente = models.CharField(max_length=20, choices=Continente.choices, null=False)
 
     def __str__(self) -> str:
         return  f"{self.nombre}"
@@ -32,9 +32,9 @@ class Parque(models.Model):
         return  f"{self.nombre}"
 
 #Datos de montaña
-class Mountain(models.Model):
+class Montana(models.Model):
     nombre = models.CharField(max_length= 50, null=False, blank=False)
-    altitud = models.PositiveIntegerField(max_length= 4, null=False, blank=False)
+    altitud = models.PositiveIntegerField(null=False, blank=False)
     cordillera = models.CharField(max_length=50, null=True, blank=True)
     pais = models.ForeignKey(Pais, on_delete=models.PROTECT, null=False, blank=False)
     provincia_estado_departamento_region = models.CharField(max_length=50, blank=False)    
@@ -51,13 +51,13 @@ class Mountain(models.Model):
 #datos de Refugios de montaña
 class Refugio(models.Model):
     nombre = models.CharField(max_length= 50, null=False, blank=False)
-    altitud = models.PositiveIntegerField(max_length= 4, null=False, blank=False)
-    capacidad = models.IntegerField(max_length=3, null=True, blank=True)
+    altitud = models.PositiveIntegerField(null=False, blank=False)
+    capacidad = models.IntegerField(null=True, blank=True)
     servicios = models.TextField(max_length=250, null=True, blank=True)
     costo = MoneyField(max_digits=10, decimal_places=2, null=True, blank=True)
     telf_contacto = PhoneNumberField(null=True, blank=True)
     correo_contacto = models.EmailField(null=True, blank=True, max_length=50)
-    mountain = models.ForeignKey(Mountain, null=False, blank= False, on_delete=models.CASCADE)
+    mountain = models.ForeignKey(Montana, null=False, blank= False, on_delete=models.CASCADE)
     
     def __str__(self) -> str:
         return  f"{self.nombre} - {self.mountain.nombre}"
@@ -88,21 +88,21 @@ class Ruta(models.Model):
         HORAS = 'Horas'
 
     nombre = models.CharField(max_length= 50, null=False, blank=False, default="Ruta Normal")
-    actividad = models.CharField(max_length=8, choices=TipoActividad.choices, null=False, blank=False)
+    actividad = models.CharField(max_length=30, choices=TipoActividad.choices, null=False, blank=False)
     tipo_trayecto = models.CharField(max_length=20, choices=TipoTrayecto.choices, null=False, blank=False)
     exigencia = models.CharField(max_length=50, choices=ExigenciaFisica.choices, null=False, blank=False)
-    distancia = models.DecimalField(max_digits=4, decimal_places=2, null=False, blank=False)
-    desnivel_positivo = models.DecimalField(max_digits=4, decimal_places=2, null=False, blank=False)
+    distancia = models.DecimalField(max_digits=7, decimal_places=2, null=False, blank=False)
+    desnivel_positivo = models.DecimalField(max_digits=7, decimal_places=2, null=False, blank=False)
     gps_trakking = models.URLField(max_length=100, null=False, blank=False)
-    mountain = models.ForeignKey(Mountain, null=False, blank= False, on_delete=models.CASCADE)
+    montana = models.ForeignKey(Montana, null=False, blank= False, on_delete=models.CASCADE)
     equipo_sugerido = models.TextField(max_length=250, null=False, blank=False)
-    tiempo_estimado = models.IntegerField(max_length=2, null=False, blank= False)
-    unidad_tiempo_estimado = models.CharField(choices=UnidadTiempo, blank=False, null=False)
+    tiempo_estimado = models.IntegerField(null=False, blank= False)
+    unidad_tiempo_estimado = models.CharField(choices=UnidadTiempo.choices, blank=False, null=False)
     dificultad_tecnica = models.CharField(max_length=20, null=False, blank=False)
     restricciones = models.TextField(max_length=200, null=True, blank=True)
 
     def __str__(self) -> str:
-        return  f"{self.nombre} - {self.mountain.nombre} - {self.tiempo_estimado} {self.unidad_tiempo_estimado} - {self.dificultad_tecnica}" 
+        return  f"{self.nombre} - {self.montana.nombre} - {self.tiempo_estimado} {self.unidad_tiempo_estimado} - {self.dificultad_tecnica}" 
 
 
 #datos de proyecto
@@ -136,12 +136,12 @@ class Actividad(models.Model):
     condiciones = models.TextField(max_length=250, null=False, blank=False)
     observaciones = models.TextField(max_length=250, null=False, blank=False)
     costo_total = MoneyField(max_digits=10, decimal_places=2, null=True, blank=True)
-    modalidad = models.CharField(choices=Modalidad, max_length=15, null=False, blank=True)
-    estado = models.CharField(choices=Estado, max_length=15, null=False, blank=True)
+    modalidad = models.CharField(choices=Modalidad.choices, max_length=15, null=False, blank=True)
+    estado = models.CharField(choices=Estado.choices, max_length=15, null=False, blank=True)
     ruta = models.ForeignKey(Ruta, on_delete=models.PROTECT, null=False, blank=False)
     proyecto = models.ForeignKey(Proyecto, on_delete=models.CASCADE, null=True, blank=True)
     
 
     def __str__(self) -> str:
-        return  f"{self.fecha_hora_inicio} - {self.fecha_hora_fin} - {self.ruta.mountain} {self.ruta.nombre} - {self.estado}"     
+        return  f"{self.fecha_hora_inicio} - {self.fecha_hora_fin} - {self.ruta.montana} {self.ruta.nombre} - {self.estado}"     
 
