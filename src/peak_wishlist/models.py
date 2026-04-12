@@ -5,7 +5,7 @@ from djmoney.models.fields import MoneyField
 #modelo pais, define el pais donde se ubica la montaña o ruta
 class Pais(models.Model):
     class Continente(models.TextChoices):
-        AMMERICA = 'America'
+        AMERICA = 'America'
         EUROPA = 'Europa'
         AFRICA = 'Africa'
         OCEANIA = 'Oceania'
@@ -16,8 +16,12 @@ class Pais(models.Model):
 
     def __str__(self) -> str:
         return  f"{self.nombre}"
+    
+    class Meta:
+        verbose_name="Pais"
+        verbose_name_plural="Paises"
 
-#modelo parque, datos de parque o zona protegida donde se ubica una montaña o ruta
+#modelo parque: datos de parque o zona protegida donde se ubica una montaña o ruta
 class Parque(models.Model):
     class TipoParque(models.TextChoices):
         PRIVADO = 'Privado'
@@ -27,9 +31,14 @@ class Parque(models.Model):
     correo = models.EmailField(null=True, blank=True, max_length=50)
     telefono = PhoneNumberField(null=True, blank=True)
     web_site = models.URLField(null=True, blank=True, max_length=60)
+    pais = models.ForeignKey(Pais, null=True, blank=True, on_delete=models.SET_NULL)
 
     def __str__(self) -> str:
         return  f"{self.nombre}"
+    
+    class Meta:
+        verbose_name="Parque"
+        verbose_name_plural="Parques"
 
 #Datos de montaña
 class Montana(models.Model):
@@ -57,10 +66,10 @@ class Refugio(models.Model):
     costo = MoneyField(max_digits=10, decimal_places=2, null=True, blank=True)
     telf_contacto = PhoneNumberField(null=True, blank=True)
     correo_contacto = models.EmailField(null=True, blank=True, max_length=50)
-    mountain = models.ForeignKey(Montana, null=False, blank= False, on_delete=models.CASCADE)
+    montana = models.ForeignKey(Montana, null=False, blank= False, on_delete=models.CASCADE)
     
     def __str__(self) -> str:
-        return  f"{self.nombre} - {self.mountain.nombre}"
+        return  f"{self.nombre} - {self.montana.nombre}"
     
 #datos de ruta de montaña
 class Ruta(models.Model):
@@ -131,7 +140,7 @@ class Actividad(models.Model):
 
     fecha_hora_inicio = models.DateTimeField(blank=False, null=False)
     fecha_hora_fin = models.DateTimeField(blank=False, null=False)
-    equipo_tulizado = models.TextField(max_length=250, null=False, blank=False)
+    equipo_utilizado = models.TextField(max_length=250, null=False, blank=False)
     companeros = models.TextField(max_length=250, null=False, blank=False)
     condiciones = models.TextField(max_length=250, null=False, blank=False)
     observaciones = models.TextField(max_length=250, null=False, blank=False)
@@ -145,3 +154,6 @@ class Actividad(models.Model):
     def __str__(self) -> str:
         return  f"{self.fecha_hora_inicio} - {self.fecha_hora_fin} - {self.ruta.montana} {self.ruta.nombre} - {self.estado}"     
 
+    class Meta:
+        verbose_name="Actividad"
+        verbose_name_plural="Actividades"
