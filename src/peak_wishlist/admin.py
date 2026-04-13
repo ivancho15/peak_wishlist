@@ -16,17 +16,17 @@ class ParqueAdmin(admin.ModelAdmin):
 
 @admin.register(models.Montana)
 class MontanaAdmin(admin.ModelAdmin):
-    list_display = ('nombre', 'altitud', 'pais')
+    list_display = ('nombre', 'altitud')
     search_fields = ('nombre', 'pais__nombre', 'cordillera', 'parque__nombre')
     list_filter = ('pais', 'cordillera', 'requiere_permiso')
     ordering = ('nombre', 'altitud')
 
 @admin.register(models.Refugio)
 class RefugioAdmin(admin.ModelAdmin):
-    list_display = ('nombre', 'montana__nombre', 'montana__pais__nombre')
-    search_fields = ('nombre', 'montana__nombre', 'montana__pais__nombre')
+    list_display = ('nombre', 'montana')
+    search_fields = ('nombre', 'montana__nombre')
     list_filter = ('montana',)
-    ordering = ('nombre', 'montana', 'costo')
+    ordering = ('nombre', 'montana__nombre', 'costo')
 
 @admin.register(models.Ruta)
 class RutaAdmin(admin.ModelAdmin):
