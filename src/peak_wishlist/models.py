@@ -45,7 +45,7 @@ class Montana(models.Model):
     nombre = models.CharField(max_length= 50, null=False, blank=False)
     altitud = models.PositiveIntegerField(null=False, blank=False)
     cordillera = models.CharField(max_length=50, null=True, blank=True)
-    pais = models.ForeignKey(Pais, on_delete=models.PROTECT, null=False, blank=False)
+    pais = models.ManyToManyField(Pais)
     provincia_estado_departamento_region = models.CharField(max_length=50, blank=False)    
     requiere_permiso = models.BooleanField(default=False)
     parque = models.ForeignKey(Parque, null=True, blank=True, on_delete=models.PROTECT)
