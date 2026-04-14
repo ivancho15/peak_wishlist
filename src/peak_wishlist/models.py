@@ -10,7 +10,6 @@ class Pais(models.Model):
         AFRICA = 'Africa'
         OCEANIA = 'Oceania'
         ASIA = 'Asia'
-
     nombre = models.CharField(max_length= 50)
     continente = models.CharField(max_length=20, choices=Continente.choices, null=False)
 
@@ -51,7 +50,7 @@ class Montana(models.Model):
     parque = models.ForeignKey(Parque, null=True, blank=True, on_delete=models.PROTECT)
 
     def __str__(self) -> str:
-        return f"{self.nombre} - {self.altitud} msnm - {self.cordillera} - {self.pais}"
+        return f"{self.nombre} - {self.altitud} msnm - {self.cordillera}"
 
     class Meta:
         verbose_name="Montaña"
@@ -108,7 +107,9 @@ class Ruta(models.Model):
     tiempo_estimado = models.IntegerField(null=False, blank= False)
     unidad_tiempo_estimado = models.CharField(choices=UnidadTiempo.choices, blank=False, null=False)
     dificultad_tecnica = models.CharField(max_length=20, null=False, blank=False)
-    restricciones = models.TextField(max_length=200, null=True, blank=True)
+    observaciones = models.TextField(max_length=200, null=True, blank=True)
+    indicaciones_inicio_ruta = models.TextField(max_length=200, null=True, blank=True)
+
 
     def __str__(self) -> str:
         return  f"{self.nombre} - {self.montana.nombre} - {self.tiempo_estimado} {self.unidad_tiempo_estimado} - {self.dificultad_tecnica}" 

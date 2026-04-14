@@ -23,7 +23,7 @@ class MontanaAdmin(admin.ModelAdmin):
 
 @admin.register(models.Refugio)
 class RefugioAdmin(admin.ModelAdmin):
-    list_display = ('nombre', 'montana')
+    list_display = ('nombre', 'altitud','montana')
     search_fields = ('nombre', 'montana__nombre')
     list_filter = ('montana',)
     ordering = ('nombre', 'montana__nombre', 'costo')
