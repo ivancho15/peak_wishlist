@@ -20,5 +20,5 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     #App peak_whishlist
-  #  path('', include('peak_whishlist.urls'))
+    path('', include('peak_wishlist.urls'))
 ]

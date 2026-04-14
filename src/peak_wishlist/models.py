@@ -152,7 +152,7 @@ class Excursion(models.Model):
     
 
     def __str__(self) -> str:
-        return  f"{self.fecha_hora_inicio} - {self.fecha_hora_fin} - {self.ruta.montana} {self.ruta.nombre} - {self.estado}"     
+        return  f"{self.fecha_hora_inicio} - {self.fecha_hora_fin} - {self.ruta.montana} - {self.ruta.nombre} - {self.estado}"     
 
     class Meta:
         verbose_name="Excursion"
