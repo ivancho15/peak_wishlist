@@ -1,50 +1,35 @@
 {% extends 'peak_wishlist/base.html' %}
 
 {% block title %}
-    -  Montañas
+    -  Paises
 {% endblock title %}
 
-{% block contenido  %}
+{% block contenido %}
 <div class="text-center py-5">
-    <h3 class="display-5 fw-bold text-dark">Lista de Montañas</h3>
+    <h3 class="display-5 fw-bold text-dark">Lista de Paises</h3>
     <hr class="my-4 mx-auto" style="width: 100px; border-top: 3px solid #2c3e50;">
 </div>
 
-<h2 class="mb-4 text-dark fw-bold">⛰️🏔️🌋Listado de Montañas</h2>
+<h2 class="mb-4 text-dark fw-bold">🌎🌍🌏Listado de Países</h2>
 
 <div class="table-container-custom table-responsive">
     <table class="table table-custom mb-0">
         <thead>
             <tr>
-                <th>Nombre</th>
-                <th>Altitud</th>
-                <th>Cordillera</th>
-                <th>Requiere Permiso</th>
-                <th class="text-center">Rutas</th>
-                <th class="text-center">Excursiones</th>
-
+                <th>País</th>
+                <th>Continente</th>
+                <th class="text-center">Montañas</th>
+                <th class="text-center">Áreas Protegidas</th>
             </tr>
         </thead>
         <tbody>
-            {% for montana in montanas %}
+            {% for pais in paises %}
             <tr>
-                <td class="fw-bold text-primary">{{ montana.nombre }}</td>
+                <td class="fw-bold text-primary">{{ pais.nombre }}</td>
                 <td>
                     <span class="badge bg-light text-dark border">
-                        {{ montana.altitud }} msnm
+                        {{ pais.continente }}
                     </span>
-                </td>
-                <td>
-                    <span class="badge bg-light text-dark border">
-                        {{ montana.cordillera }} 
-                    </span>
-                </td>
-                <td class="text-center">
-                    {% if montana.requiere_permiso %}
-                        ⚠️
-                    {% else %}
-                        🆓
-                    {% endif %}
                 </td>
                 <td class="text-center">
                     <a href="#" class="btn btn-sm btn-outline-dark rounded-pill">Ver lista</a>
@@ -64,4 +49,4 @@
     </table>
 </div>
     
-{% endblock contenido  %}
+{% endblock contenido %}
