@@ -1,18 +1,61 @@
 {% extends 'peak_wishlist/base.html' %}
 
+{% block title %}
+    -  Inicio
+{% endblock title %}
+
 {% block contenido %}
-    <h2>Bienvendio a Peak Whish List</h2>
-    <div>
-        <ul>
-            <div> 
-                <li> Aqui podras registrar todas  tus rutas de montaña</li>
+<div class="text-center py-5">
+    <h1 class="display-4 fw-bold text-dark">¡Bienvenido a Peak Wishlist!</h1>
+    <p class="lead text-muted">Tu bitácora digital para conquistar las cumbres del mundo.</p>
+    <hr class="my-4 mx-auto" style="width: 100px; border-top: 3px solid #2c3e50;">
+</div>
+
+<div class="row g-4">
+    <div class="col-md-6 col-lg-3">
+        <div class="card h-100 shadow-sm border-0">
+            <div class="card-body text-center">
+                <div class="display-5 mb-3"> 🧭</div>
+                <h5 class="card-title fw-bold">Registra Rutas</h5>
+                <p class="card-text text-secondary small">Lleva un historial detallado de cada sendero y pared que conquistes.</p>
             </div>
-            <div> 
-                <li> Planifica tus rutas y proximas cumbres </li>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+        <div class="card h-100 shadow-sm border-0">
+            <div class="card-body text-center">
+                <div class="display-5 mb-3"> 🧗</div>
+                <h5 class="card-title fw-bold">Planifica</h5>
+                <p class="card-text text-secondary small">Rodadas, escaladas y expediciones. Todo en un solo lugar.</p>
             </div>
-            <div> 
-                <li> Guarda informaciond utl para compartir sobe las montañas rutas alcanzadas y por alcanzar </li>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+        <div class="card h-100 shadow-sm border-0">
+            <div class="card-body text-center">
+                <div class="display-5 mb-3">🥾</div>
+                <h5 class="card-title fw-bold">Comparte</h5>
+                <p class="card-text text-secondary small">Guarda y comparte información técnica sobre accesos, refugios y estados de ruta.</p>
             </div>
-        </ul>
-    <div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+        <div class="card h-100 shadow-sm border-0">
+            <div class="card-body text-center">
+                <div class="display-5 mb-3">🗺️</div>
+                <h5 class="card-title fw-bold">Proyectos</h5>
+                <p class="card-text text-secondary small">Organiza tus grandes expediciones a largo plazo con amigos y compañeros.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="text-center mt-5">
+    <a href="#" class="btn btn-lg px-4" style="background-color: #2c3e50; color: white;">
+        Empezar mi bitácora
+    </a>
+</div>
 {% endblock contenido %}
