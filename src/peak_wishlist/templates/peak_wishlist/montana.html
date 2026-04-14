@@ -10,7 +10,7 @@
     <hr class="my-4 mx-auto" style="width: 100px; border-top: 3px solid #2c3e50;">
 </div>
 
-<h2 class="mb-4 text-dark fw-bold">⛰️🏔️🌋Listado de Montañas</h2>
+<h2 class="mb-4 text-dark fw-bold">⛰️🏔️🌋Listado de Montañas {{ extension_titulo }}</h2>
 
 <div class="table-container-custom table-responsive">
     <table class="table table-custom mb-0">
@@ -20,6 +20,7 @@
                 <th>Altitud</th>
                 <th>Cordillera</th>
                 <th>Requiere Permiso</th>
+                <th>Pais</th>
                 <th class="text-center">Rutas</th>
                 <th class="text-center">Excursiones</th>
 
@@ -45,6 +46,13 @@
                     {% else %}
                         🆓
                     {% endif %}
+                </td>
+                <td>
+                    <span class="badge bg-light text-dark border">
+                        {% for pais in montana.pais.all %} 
+                            {{ pais.nombre }} &nbsp;
+                        {% endfor %}
+                    </span>
                 </td>
                 <td class="text-center">
                     <a href="#" class="btn btn-sm btn-outline-dark rounded-pill">Ver lista</a>
