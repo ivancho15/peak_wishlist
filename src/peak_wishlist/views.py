@@ -1,3 +1,6 @@
 from django.shortcuts import render
+from peak_wishlist import models
 
-# Create your views here.
+def index(request):
+    return render(request, 'peak_wishlist/index.html')
+
