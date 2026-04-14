@@ -43,8 +43,8 @@ class ProyectoAdmin(admin.ModelAdmin):
     ordering = ('pais_destino', '-fecha_inicio')
     date_hierarchy = 'fecha_inicio'
 
-@admin.register(models.Actividad)
-class ActividadAdmin(admin.ModelAdmin):
+@admin.register(models.Excursion)
+class ExcursionAdmin(admin.ModelAdmin):
     list_display = ('fecha_hora_inicio', 'ruta', 'estado')
     search_fields = ('ruta__montana__pais__nombre','ruta__montana__nombre','ruta__nombre', 'proyecto__nombre')
     list_filter = ('ruta', 'proyecto', 'estado')

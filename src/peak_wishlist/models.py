@@ -126,8 +126,8 @@ class Proyecto(models.Model):
     def __str__(self):
         return f"{self.nombre}: {self.fecha_inicio} - {self.fecha_fin}" 
 
-#datos de salida/actividad
-class Actividad(models.Model):
+#datos de salida/excursion
+class Excursion(models.Model):
     class Modalidad(models.TextChoices):
         GUIADO = 'Guiado'
         AUTOGUIADO = 'Autoguiado'
@@ -155,5 +155,5 @@ class Actividad(models.Model):
         return  f"{self.fecha_hora_inicio} - {self.fecha_hora_fin} - {self.ruta.montana} {self.ruta.nombre} - {self.estado}"     
 
     class Meta:
-        verbose_name="Actividad"
-        verbose_name_plural="Actividades"
+        verbose_name="Excursion"
+        verbose_name_plural="Excursiones"

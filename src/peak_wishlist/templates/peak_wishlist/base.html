@@ -1,0 +1,26 @@
+!<!doctype html>
+<html lang="en">
+  <head>
+    <title>Peak Whish List App {% block title %}
+        
+    {% endblock title %}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  </head>
+  <body>
+    <nav style="text-align: center;">
+        <h1>Peak Whislist</h1>
+        <a href="{% url 'peak_whishlist:index' %}"> Home</a>
+        <a href=" ">Pais</a>
+        <a href=" ">Montañas</a>  
+        <a href=" ">Actividad</a>
+    </nav>
+      
+    <main>
+        {% block contenido %}
+       
+        {% endblock contenido %%}
+    </main>
+
+  </body>
+</html>
