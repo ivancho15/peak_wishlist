@@ -17,3 +17,7 @@ def montanas(request, pais_id=None):
         query = models.Montana.objects.all().order_by('-altitud')
         extension_titulo = " "
     return render(request, "peak_wishlist/montana.html", {'montanas': query, "extension_titulo": extension_titulo})
+
+def  proyectos(request):
+    query = models.Proyecto.objects.all().order_by('fecha_inicio')
+    return render(request, "peak_wishlist/proyecto.html", {'proyectos': query})

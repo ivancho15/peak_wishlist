@@ -1,5 +1,69 @@
 {% extends 'peak_wishlist/base.html' %}
-
 {% block title %}
      Proyecto
 {% endblock title %}
+
+{% block contenido %}
+<div class="text-center py-5">
+<h3 class="display-5 fw-bold text-dark">Lista de Proyectos</h3>
+<hr class="my-4 mx-auto" style="width: 100px; border-top: 3px solid #2c3e50;">
+</div>
+
+<h2 class="mb-4 text-dark fw-bold">📆🏕️✈️ Listado de Proyectos</h2>
+
+<div class="table-container-custom table-responsive">
+    <table class="table table-custom mb-0">
+        <thead>
+            <tr>
+                <th>Proyecto</th>
+                <th>Pais</th>
+                <th>Inicio</th>
+                <th>Fin</th>
+                <th class="text-center">Excusiones</th>
+                <th class="text-center">Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for proyecto in proyectos %}
+            <tr>
+                <td class="fw-bold text-primary">{{ proyecto.nombre }}</td>
+                <td>
+                    <span class="badge bg-light text-dark border">
+                        {{ proyecto.pais_destino }}
+                    </span>
+                </td>
+                <td>
+                    <span class="badge bg-light text-dark border">
+                        {{ proyecto.fecha_inicio|date:"d \d\e M \d\e Y" }}
+                    </span>
+                </td>
+                <td>
+                    <span class="badge bg-light text-dark border">
+                        {{ proyecto.fecha_fin|date:"d \d\e M \d\e Y" }}
+                    </span>
+                </td>
+                <td class="text-center">
+                    <a href="" class="btn btn-sm btn-outline-dark rounded-pill">Ver lista</a>
+                </td>
+                <td>
+                    <span class="badge {% if proyecto.estado == 'Cumbre/Completado' %}bg-success{% else %}bg-warning text-dark{% endif %} border">
+                        {% if  proyecto.estado == "Cumbre/Completado" %}
+                            Completado ✅
+                        {% else %}
+                            En Planificación ⏳
+                        {% endif %}
+                    </span>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" class="text-center py-4 text-muted">
+                    No hay Proyectos registrados todavía. 
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>    
+
+{% endblock contenido %}

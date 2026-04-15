@@ -7,5 +7,6 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('pais/', views.paises, name='pais'),
     path('montana/', views.montanas ,  name='montanas'),
+    path('proyecto/', views.proyectos ,  name='proyecto'),
     path('pais/montanas/<int:pais_id>', views.montanas, name='montanas_por_pais'),
     ]
