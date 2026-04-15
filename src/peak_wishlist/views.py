@@ -31,4 +31,10 @@ def excursiones(rqequest, proyecto_id=None):
         query = models.Excursion.objects.all().order_by('-fecha_hora_inicio')
         extension_titulo = ""
     return render(rqequest, 'peak_wishlist/excursiones.html', {'excursiones': query, "extension_titulo": extension_titulo})
+
+def  parques(request, pais_id=None):
+    pais = models.Pais.objects.get(id=pais_id)
+    query = models.Parque.objects.filter(pais=pais).order_by('nombre')
+    contexto = {'parques': query, 'extension_titulo': pais.nombre }
+    return render(request, "peak_wishlist/parques.html", contexto)
     

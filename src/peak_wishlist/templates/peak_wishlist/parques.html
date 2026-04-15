@@ -3,3 +3,59 @@
 {% block title %}
      Parque / Area Protegida
 {% endblock title %}
+
+{% block contenido %}
+     
+<div class="text-center py-5">
+    <h3 class="display-5 fw-bold text-dark">Lista de Parques y Areas Protegidas</h3>
+    <hr class="my-4 mx-auto" style="width: 100px; border-top: 3px solid #2c3e50;">
+</div>
+
+<h2 class="mb-4 text-dark fw-bold">🏞️Listado de Parques Nacionales y Areas Protegidas {{ extension_titulo }}</h2>
+
+<div class="table-container-custom table-responsive">
+    <table class="table table-custom mb-0">
+        <thead>
+            <tr>
+               <th>Nombre</th>
+               <th>Tlf Contacto</th>   
+               <th>Email contacto</th>   
+               <th>Web Site</th>  
+               <th class="text-center">Montañas</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for parque in parques %}
+            <tr>
+                <td class="fw-bold text-primary">{{ parque.nombre }}</td>
+                <td>
+                    <span class="badge bg-light text-dark border">
+                        {{ parque.telefono }}
+                    </span>
+                </td>
+                <td>
+                    <span class="badge bg-light text-dark border">
+                        {{ parque.correo }} 
+                    </span>
+                </td>
+                <td>
+                    <span class="badge bg-light text-dark border">
+                        {{ parque.web_site }} 
+                    </span>
+                </td>
+                <td class="text-center">
+                    <a href="#" class="btn btn-sm btn-outline-dark rounded-pill">Ver lista</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" class="text-center py-4 text-muted">
+                    No hay Parques registrados todavía. 
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock contenido %}
