@@ -125,7 +125,7 @@ class Proyecto(models.Model):
     pais_destino = models.ForeignKey(Pais, on_delete=models.PROTECT, null=False, blank=False)
     fecha_inicio = models.DateField(null=False, blank=False)
     fecha_fin = models.DateField(null=False, blank=False)
-    presupuesto_general = MoneyField(max_digits=6, decimal_places=0, null=False, blank=False)
+    presupuesto_general = MoneyField(max_digits=8, decimal_places=0, null=False, blank=False)
     companeros = models.TextField(max_length=250, null=False, blank=False)
     estado = models.CharField(choices=Estado.choices, max_length=20, null=False, blank=True)
 
