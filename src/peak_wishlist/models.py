@@ -85,7 +85,7 @@ class Ruta(models.Model):
         Circunvalacion = 'Circunvalacion'
 
     class ExigenciaFisica(models.TextChoices):
-        UN_DIA = 'Treking de un Dia'
+        UN_DIA = 'Treking/escalada de un Dia'
         DOS_DIAS = 'Trekking/escalada de Fin de Semana'
         VARIOS_DIAS = 'Varios Dias en Montaña'
         GRAN_RECORRIDO = 'Gran Recorrido'
