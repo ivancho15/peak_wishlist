@@ -1,0 +1,53 @@
+{% extends 'peak_wishlist/base.html' %}
+
+{% block title %}
+     Refugios
+{% endblock title %}
+
+{% block contenido %}
+
+<div class="text-center py-5">
+    <h3 class="display-5 fw-bold text-dark">Lista de Refugios</h3>
+    <hr class="my-4 mx-auto" style="width: 100px; border-top: 3px solid #2c3e50;">
+</div>
+
+
+<h2 class="mb-4 text-dark fw-bold"> 🛖 Refugios en {{ extension_titulo }}</h2>
+
+<div class="table-container-custom table-responsive">
+    <table class="table table-custom mb-0">
+        <thead>
+            <tr>
+               <th>Nombre</th>
+               <th>Capacidad</th>      
+               <th>Servicios</th>   
+            </tr>
+        </thead>
+        <tbody>
+            {% for refugio in refugios %}
+            <tr>
+                <td class="fw-bold text-primary">{{ refugio.nombre }}</td>
+                <td>
+                    <span class="badge bg-light text-dark border">
+                        {{ refugio.capacidad }} personas
+                    </span>
+                </td>
+                <td>
+                    <span class="badge bg-light text-dark border">
+                        {{ refugio.servicios }} 
+                    </span>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" class="text-center py-4 text-muted">
+                    No hay Refugios registrados registrados todavía. 
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+{% endblock contenido %}

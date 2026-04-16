@@ -18,8 +18,8 @@
             <tr>
                 <th>País</th>
                 <th>Continente</th>
-                <th class="text-center">Montañas</th>
                 <th class="text-center">Áreas Protegidas</th>
+                <th class="text-center">Montañas</th>
             </tr>
         </thead>
         <tbody>
@@ -32,10 +32,10 @@
                     </span>
                 </td>
                 <td class="text-center">
-                    <a href="{% url 'peak_wishlist:montanas_por_pais' pais.id %}" class="btn btn-sm btn-outline-dark rounded-pill">Ver lista</a>
+                    <a href="{% url 'peak_wishlist:parques_por_pais' pais.id %}" class="btn btn-sm btn-outline-dark rounded-pill">Ver lista</a>
                 </td>
                 <td class="text-center">
-                    <a href="{% url 'peak_wishlist:parques_por_pais' pais.id %}" class="btn btn-sm btn-outline-dark rounded-pill">Ver lista</a>
+                    <a href="{% url 'peak_wishlist:montanas_por_pais' pais.id %}" class="btn btn-sm btn-outline-dark rounded-pill">Ver lista</a>
                 </td>
             </tr>
             {% empty %}

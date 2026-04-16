@@ -10,11 +10,15 @@ def paises(request):
     return render(request, "peak_wishlist/paises.html", {'paises': query})
 
 
-def montanas(request, pais_id=None):
+def montanas(request, pais_id=None, parque_id=None):
     if pais_id:
         pais =  models.Pais.objects.get(id =pais_id)
         query = models.Montana.objects.filter(pais=pais).order_by('-altitud')
         extension_titulo = f" en {pais.nombre}"
+    elif parque_id:
+        parque =  models.Parque.objects.get(id =parque_id)
+        query = models.Montana.objects.filter(parque=parque).order_by('-altitud')
+        extension_titulo = f" en {parque.nombre} ({ parque.pais })"
     else:
         query = models.Montana.objects.all().order_by('-altitud')
         extension_titulo = " "
@@ -55,3 +59,11 @@ def rutas(request, montana_id=None):
     extension_titulo = f"en {montana.nombre}"
     contexto = {'rutas': query, 'extension_titulo': extension_titulo}
     return render(request, 'peak_wishlist/rutas.html', contexto)
+
+
+def refugios(request, montana_id=None):
+    montana = models.Montana.objects.get(id = montana_id)
+    query = models.Refugio.objects.filter(montana = montana)
+    extension_titulo = f"{montana.nombre}"
+    contexto = {'refugios': query, 'extension_titulo': extension_titulo}
+    return render(request, 'peak_wishlist/refugios.html', contexto)
