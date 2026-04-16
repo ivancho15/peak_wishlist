@@ -16,4 +16,5 @@ urlpatterns = [
     path('parque/montana<int:parque_id>', views.montanas, name='montanas_por_parque'),
     path('ruta/excursiones<int:ruta_id>', views.excursiones, name='excursiones_por_ruta'),
     path('montana/refugios<int:montana_id>', views.refugios, name='refugios_por_mnontana'),
+    path('montana/excursiones<int:montana_id>', views.excursiones, name='excursiones_por_mnontana'),
     ]

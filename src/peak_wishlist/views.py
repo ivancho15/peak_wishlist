@@ -30,7 +30,7 @@ def  proyectos(request):
     return render(request, "peak_wishlist/proyectos.html", {'proyectos': query})
 
 
-def excursiones(rqequest, proyecto_id=None, ruta_id=None):
+def excursiones(rqequest, proyecto_id=None, ruta_id=None, montana_id=None):
     if proyecto_id:
         proyecto =  models.Proyecto.objects.get(id =proyecto_id)
         query = models.Excursion.objects.filter(proyecto=proyecto).order_by('-fecha_hora_inicio')
@@ -39,6 +39,10 @@ def excursiones(rqequest, proyecto_id=None, ruta_id=None):
         ruta =  models.Ruta.objects.get(id =ruta_id)
         query = models.Excursion.objects.filter(ruta=ruta).order_by('-fecha_hora_inicio')
         extension_titulo = f" en: {ruta.nombre} de {ruta.montana.nombre}"
+    elif  montana_id:
+        montana =  models.Montana.objects.get(id =montana_id)
+        query = models.Excursion.objects.filter(ruta__montana=montana).order_by('-fecha_hora_inicio')
+        extension_titulo = f" en: {montana.nombre} "
     else:
         query = models.Excursion.objects.all().order_by('-fecha_hora_inicio')
         extension_titulo = ""
