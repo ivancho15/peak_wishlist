@@ -17,7 +17,7 @@ class ParqueAdmin(admin.ModelAdmin):
 @admin.register(models.Montana)
 class MontanaAdmin(admin.ModelAdmin):
     list_display = ('nombre', 'altitud')
-    search_fields = ('nombre', 'pais__nombre', 'cordillera', 'parque__nombre')
+    search_fields = ('nombre', 'cordillera', 'parque__nombre')
     list_filter = ('pais', 'cordillera', 'requiere_permiso')
     ordering = ('nombre', 'altitud')
 
