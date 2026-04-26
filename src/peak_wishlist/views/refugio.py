@@ -16,6 +16,7 @@ from peak_wishlist.models import Montana, Refugio
 class RefugioList(ListView):
     model = Refugio
     template_name = "peak_wishlist/refugios.html"
+    context_object_name = "refugios"
 
     def get_queryset(self) -> QuerySet[Any]:
         montana_id = self.kwargs.get("montana_id")

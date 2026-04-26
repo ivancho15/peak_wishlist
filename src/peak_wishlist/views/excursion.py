@@ -16,6 +16,7 @@ from peak_wishlist.models import Excursion, Proyecto, Ruta
 class ExcursionList(ListView):
     model = Excursion
     template_name = "peak_wishlist/excursiones.html"
+    context_object_name = "excursiones"
 
     def get_queryset(self) -> QuerySet[Any]:
         ruta_id = self.kwargs.get("ruta_id")

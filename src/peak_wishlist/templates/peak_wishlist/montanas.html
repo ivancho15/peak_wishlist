@@ -52,18 +52,18 @@
                 </td>
                 <td class="text-center">
                     {% if montana.refugio_set.all %}
-                        <a href="{% url 'peak_wishlist:refugios_por_mnontana' montana.id %}" 
+                        <a href="{% url 'peak_wishlist:refugios_por_montana' montana.id %}" 
                            class="text-decoration-none fs-4" title="Ver refugios">🛖</a>
                     {% else %}
                         <span class="text-muted opacity-25">--</span>
                     {% endif %}
                 </td>
                 <td class="text-center">
-                    <a href="{% url 'peak_wishlist:rutas_por_mnontana' montana.id %}" 
+                    <a href="{% url 'peak_wishlist:rutas_por_montana' montana.id %}" 
                        class="btn btn-sm btn-outline-dark rounded-pill py-0 px-2" style="font-size: 0.8rem;">Ver lista</a>
                 </td>
                 <td class="text-center">
-                    <a href="{% url 'peak_wishlist:excursiones_por_mnontana' montana.id %}" class="btn btn-sm btn-outline-dark rounded-pill py-0 px-2" 
+                    <a href="{% url 'peak_wishlist:excursiones_por_montana' montana.id %}" class="btn btn-sm btn-outline-dark rounded-pill py-0 px-2" 
                        style="font-size: 0.8rem;">Ver lista</a>
                 </td>
             </tr>

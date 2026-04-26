@@ -8,6 +8,7 @@ from django.shortcuts import get_object_or_404
 class  MontanaList(ListView):
     model = Montana
     template_name = "peak_wishlist/montanas.html"
+    context_object_name = "montanas"
 
     def get_queryset(self) -> QuerySet[Any]:
         pais_id = self.kwargs.get('pais_id')

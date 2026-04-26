@@ -4,6 +4,7 @@ from peak_wishlist.models import Pais
 class  PaisList(ListView):
     model = Pais 
     template_name = "peak_wishlist/paises.html"
+    context_object_name = "paises"
 
 
     

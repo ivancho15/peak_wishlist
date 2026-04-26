@@ -4,4 +4,5 @@ from peak_wishlist.models import Proyecto
 class ProyectoList(ListView):
     model = Proyecto
     template_name = "peak_wishlist/proyectos.html"
+    context_object_name = "proyectos"
     

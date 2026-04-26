@@ -8,6 +8,7 @@ from peak_wishlist.models import Parque, Pais
 class  ParqueList(ListView):
     model = Parque
     template_name = "peak_wishlist/parques.html"
+    context_object_name = "parques"
 
     def get_queryset(self):
         self.pais = get_object_or_404(Pais, id=self.kwargs['pais_id'])
