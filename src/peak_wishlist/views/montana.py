@@ -1,9 +1,11 @@
 from typing import Any
 
 from django.db.models.query import QuerySet
-from django.views.generic import  ListView, DetailView
+from django.views.generic import  ListView, DetailView, CreateView
 from peak_wishlist.models import Montana, Pais, Parque
 from django.shortcuts import get_object_or_404
+from peak_wishlist.forms import MontanaForm
+from django.urls import reverse_lazy
 
 class  MontanaList(ListView):
     model = Montana
@@ -33,5 +35,21 @@ class  MontanaList(ListView):
             context['extension_titulo'] = f"en {self.filtro.nombre} ({self.filtro.pais})"
         else:
             context['extension_titulo'] = ""
+        return context
 
+
+class MontanaCreate(CreateView):
+    model = Montana
+    form_class = MontanaForm
+    template_name = "peak_wishlist/montana_form.html" 
+
+    def get_success_url(self):
+        if self.object and self.object.pais.exists(): # type: ignore
+            primer_pais = self.object.pais.first() # type: ignore
+            return reverse_lazy('peak_wishlist:montanas_por_pais', kwargs={'pais_id': primer_pais.id})
+        return reverse_lazy('peak_wishlist:montanas')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['url_cancelar'] = reverse_lazy('peak_wishlist:montanas')
         return context

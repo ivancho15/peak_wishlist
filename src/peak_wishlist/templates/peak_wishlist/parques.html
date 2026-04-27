@@ -13,6 +13,10 @@
 
 <h2 class="mb-4 text-dark fw-bold">🏞️Listado de Parques Nacionales y Areas Protegidas  {{ extension_titulo }}</h2>
 
+<a href="{% url 'peak_wishlist:registrar_parque' pais_id=view.pais.id %}" class="btn btn-dark rounded-pill shadow-sm">
+        ➕ Registrar Parque
+</a>
+
 <div class="table-container-custom table-responsive">
     <table class="table table-custom mb-0">
         <thead>

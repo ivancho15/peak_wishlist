@@ -24,7 +24,9 @@ urlpatterns = [
         parque.ParqueList.as_view(),
         name="parques_por_pais",
     ),
+    path("pais/<int:pais_id>/parques/create/", parque.ParqueCreate.as_view(), name="registrar_parque"),
     path("montanas/", montana.MontanaList.as_view(), name="montanas"),
+    path("montanas/create/", montana.MontanaCreate.as_view(), name="registrar_montana"),
     path("proyectos/", proyecto.ProyectoList.as_view(), name="proyectos"),
     path("excursiones/", excursion.ExcursionList.as_view(), name="excursiones"),
     path(

@@ -1,8 +1,10 @@
 from typing import Any
 
-from django.views.generic import ListView
+from django.views.generic import ListView, CreateView
 from django.shortcuts import get_object_or_404
 from peak_wishlist.models import Parque, Pais
+from django.urls import reverse_lazy
+from peak_wishlist.forms import ParqueForm
 
 class  ParqueList(ListView):
     model = Parque
@@ -18,3 +20,24 @@ class  ParqueList(ListView):
         context['extension_titulo'] = f"en {self.pais.nombre}"
         return context
         
+
+class ParqueCreate(CreateView):
+    model = Parque
+    form_class = ParqueForm
+    template_name = "peak_wishlist/parque_form.html"
+
+    def form_valid(self, form):
+        pais = get_object_or_404(Pais, id=self.kwargs.get('pais_id'))
+        form.instance.pais = pais
+        return super().form_valid(form)
+    
+    def get_success_url(self):
+        return reverse_lazy('peak_wishlist:parques_por_pais', kwargs={'pais_id': self.kwargs.get('pais_id')})
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['url_cancelar'] = reverse_lazy('peak_wishlist:parques_por_pais', kwargs={'pais_id': self.kwargs.get('pais_id')})
+        return context
+
+
+    
