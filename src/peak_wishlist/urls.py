@@ -18,6 +18,7 @@ urlpatterns = [
         "", TemplateView.as_view(template_name="peak_wishlist/index.html"), name="index"
     ),
     path("paises/", pais.PaisList.as_view(), name="paises"),
+    path('paises/continente/<str:continente>/', pais.PaisList.as_view(), name='paises_por_continente'),
     path(
         "pais/parques/<int:pais_id>/",
         parque.ParqueList.as_view(),

@@ -10,6 +10,26 @@
     <hr class="my-4 mx-auto" style="width: 100px; border-top: 3px solid #2c3e50;">
 </div>
 
+<div class="container mb-5">
+    <div class="d-flex flex-column flex-md-row align-items-center justify-content-center gap-3">
+        <span class="text-muted fw-bold text-uppercase small"><i class="bi bi-geo-alt"></i> Filtrar continente:</span>
+        
+        <div class="d-flex flex-wrap justify-content-center gap-2">
+            <a href="{% url 'peak_wishlist:paises' %}" 
+               class="btn btn-sm {% if not continente_actual %}btn-dark{% else %}btn-outline-dark{% endif %} rounded-pill px-4">
+               Todos
+            </a>
+
+            {% for valor, etiqueta in continentes %}
+                <a href="{% url 'peak_wishlist:paises_por_continente' valor %}" 
+                   class="btn btn-sm {% if continente_actual == valor %}btn-dark{% else %}btn-outline-dark{% endif %} rounded-pill px-3">
+                    {{ etiqueta }}
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
 <h2 class="mb-4 text-dark fw-bold">🌎🌍🌏Listado de Países</h2>
 
 <div class="table-container-custom table-responsive">
