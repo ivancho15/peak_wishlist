@@ -27,6 +27,26 @@ urlpatterns = [
     path("pais/<int:pais_id>/parque/create/", parque.ParqueCreate.as_view(), name="registrar_parque"),
     path("montanas/", montana.MontanaList.as_view(), name="montanas"),
     path("montanas/create/", montana.MontanaCreate.as_view(), name="registrar_montana"),
+    path(
+        "montana/refugios/<int:montana_id>/",
+        refugio.RefugioList.as_view(),
+        name="refugios_por_montana",
+    ),
+    path(
+        "montana/<int:montana_id>/refugios/create/", 
+        refugio.RefugioCreate.as_view(), 
+        name="registrar_refugio"
+    ),
+    path(
+        "montana/rutas/<int:montana_id>/",
+        ruta.RutaList.as_view(),
+        name="rutas_por_montana",
+    ),
+    path(
+        "montana/<int:montana_id>/ruta/create/", 
+        ruta.RutaCreate.as_view(), 
+        name="registrar_ruta"
+    ),
     path("proyectos/", proyecto.ProyectoList.as_view(), name="proyectos"),
     path("excursiones/", excursion.ExcursionList.as_view(), name="excursiones"),
     path(
@@ -40,11 +60,6 @@ urlpatterns = [
         name="excursiones_por_proyecto",
     ),
     path(
-        "montana/rutas/<int:montana_id>/",
-        ruta.RutaList.as_view(),
-        name="rutas_por_montana",
-    ),
-    path(
         "parque/montanas/<int:parque_id>/",
         montana.MontanaList.as_view(),
         name="montanas_por_parque",
@@ -53,16 +68,6 @@ urlpatterns = [
         "ruta/excursiones/<int:ruta_id>/",
         excursion.ExcursionList.as_view(),
         name="excursiones_por_ruta",
-    ),
-    path(
-        "montana/refugios/<int:montana_id>/",
-        refugio.RefugioList.as_view(),
-        name="refugios_por_montana",
-    ),
-    path(
-        "montana/<int:montana_id>/refugios/create/", 
-        refugio.RefugioCreate.as_view(), 
-        name="registrar_refugio"
     ),
     path(
         "montana/excursiones/<int:montana_id>/",

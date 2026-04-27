@@ -34,10 +34,30 @@ class RefugioForm(forms.ModelForm):
         model = Refugio
         fields = ['nombre', 'altitud', 'capacidad', 'servicios', 'costo', 'telf_contacto', 'correo_contacto']
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for name, field in self.fields.items():
+            if isinstance(field.widget, forms.Textarea):
+                field.widget.attrs.update({'class': 'form-control rounded-4', 'rows': '3'})
+            elif isinstance(field.widget, forms.CheckboxInput):
+                field.widget.attrs.update({'class': 'form-check-input'})
+            else:
+                field.widget.attrs.update({'class': 'form-control rounded-pill'})
+
 class RutaForm(forms.ModelForm):
     class Meta:
         model = Ruta
-        fields = "__all__"
+        exclude = ['montana'] 
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for name, field in self.fields.items():
+            if isinstance(field.widget, forms.Textarea):
+                field.widget.attrs.update({'class': 'form-control rounded-4', 'rows': '3'})
+            elif isinstance(field.widget, forms.CheckboxInput):
+                field.widget.attrs.update({'class': 'form-check-input'})
+            else:
+                field.widget.attrs.update({'class': 'form-control rounded-pill'})
 
 class ParqueForm(forms.ModelForm):
     class Meta:
