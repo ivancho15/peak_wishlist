@@ -1,6 +1,6 @@
 from typing import Any
 
-from django.views.generic import ListView, CreateView
+from django.views.generic import ListView, CreateView, DetailView
 from django.shortcuts import get_object_or_404
 from peak_wishlist.models import Parque, Pais
 from django.urls import reverse_lazy
@@ -25,7 +25,7 @@ class ParqueCreate(CreateView):
     model = Parque
     form_class = ParqueForm
     template_name = "peak_wishlist/parque_form.html"
-
+    
     def form_valid(self, form):
         pais = get_object_or_404(Pais, id=self.kwargs.get('pais_id'))
         form.instance.pais = pais
@@ -36,6 +36,8 @@ class ParqueCreate(CreateView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        pais = get_object_or_404(Pais, id=self.kwargs.get('pais_id'))
+        context['titulo_dinamico'] = f"🏞️ Registrar Parque/Area protegida en {pais.nombre}"
         context['url_cancelar'] = reverse_lazy('peak_wishlist:parques_por_pais', kwargs={'pais_id': self.kwargs.get('pais_id')})
         return context
 

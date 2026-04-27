@@ -22,7 +22,6 @@ class MontanaForm(forms.ModelForm):
         parque = cleaned_data.get("parque")
 
         if parque and paises_seleccionados:
-        
             if not paises_seleccionados.filter(id=parque.pais.id).exists():
                 nombres_paises = ", ".join([p.nombre for p in paises_seleccionados])
                 raise forms.ValidationError(
@@ -43,7 +42,18 @@ class RutaForm(forms.ModelForm):
 class ParqueForm(forms.ModelForm):
     class Meta:
         model = Parque
-        fields = "__all__"
+        exclude = ['pais'] 
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for name, field in self.fields.items():
+            if isinstance(field.widget, forms.Textarea):
+                field.widget.attrs.update({'class': 'form-control rounded-4', 'rows': '3'})
+            elif isinstance(field.widget, forms.CheckboxInput):
+                field.widget.attrs.update({'class': 'form-check-input'})
+            else:
+                field.widget.attrs.update({'class': 'form-control rounded-pill'})
+
 
 class ProyectoForm(forms.ModelForm):
     class Meta:
