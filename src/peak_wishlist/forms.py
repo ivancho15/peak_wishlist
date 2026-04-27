@@ -33,7 +33,7 @@ class MontanaForm(forms.ModelForm):
 class RefugioForm(forms.ModelForm):
     class Meta:
         model = Refugio
-        fields = "__all__"
+        fields = ['nombre', 'altitud', 'capacidad', 'servicios', 'costo', 'telf_contacto', 'correo_contacto']
 
 class RutaForm(forms.ModelForm):
     class Meta:

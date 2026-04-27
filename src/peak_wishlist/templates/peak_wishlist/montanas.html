@@ -59,7 +59,11 @@
                         <a href="{% url 'peak_wishlist:refugios_por_montana' montana.id %}" 
                            class="text-decoration-none fs-4" title="Ver refugios">🛖</a>
                     {% else %}
-                        <span class="text-muted opacity-25">--</span>
+                        <a href="{% url 'peak_wishlist:registrar_refugio' montana_id=montana.id %}" 
+                        class="btn btn-sm rounded-pill px-3 shadow-sm"
+                        style="background-color: #e9ecef; color: #495057; border: none; font-size: 0.75rem; font-weight: 600;">
+                        <span class="me-1">➕</span> Registrar
+                        </a>
                     {% endif %}
                 </td>
                 <td class="text-center">

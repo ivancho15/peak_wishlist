@@ -60,6 +60,11 @@ urlpatterns = [
         name="refugios_por_montana",
     ),
     path(
+        "montana/<int:montana_id>/refugios/create/", 
+        refugio.RefugioCreate.as_view(), 
+        name="registrar_refugio"
+    ),
+    path(
         "montana/excursiones/<int:montana_id>/",
         excursion.ExcursionList.as_view(),
         name="excursiones_por_montana",

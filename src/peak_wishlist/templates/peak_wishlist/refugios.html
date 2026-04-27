@@ -14,6 +14,13 @@
 
 <h2 class="mb-4 text-dark fw-bold"> 🛖 Refugios en {{ extension_titulo }}</h2>
 
+<div class="mb-4">
+    <a href="{% url 'peak_wishlist:registrar_refugio' montana_id=view.kwargs.montana_id %}" 
+       class="btn btn-dark rounded-pill shadow-sm">
+        ➕ Registrar otro Refugio
+    </a>
+</div>
+
 <div class="table-container-custom table-responsive">
     <table class="table table-custom mb-0">
         <thead>
