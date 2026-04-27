@@ -1,7 +1,7 @@
 from typing import Any
 
 from django.db.models.query import QuerySet
-from django.views.generic import CreateView,  DeleteView, DetailView, ListView, UpdateView
+from django.views.generic import  ListView, DetailView
 from peak_wishlist.models import Montana, Pais, Parque
 from django.shortcuts import get_object_or_404
 
@@ -16,10 +16,10 @@ class  MontanaList(ListView):
     
         if pais_id:
             self.filtro = get_object_or_404(Pais, id=pais_id)
-            return Montana.objects.filter(pais=self.filtro).order_by('-altura')
+            return Montana.objects.filter(pais=self.filtro).order_by('-altitud')
         elif parque_id:
             self.filtro  = get_object_or_404(Parque, id=parque_id)
-            return Montana.objects.filter(parque=self.filtro).order_by('-altura')
+            return Montana.objects.filter(parque=self.filtro).order_by('-altitud')
         
         self.filtro = None
         return Montana.objects.all().order_by('-altitud')

@@ -1,7 +1,6 @@
 from typing import Any
 
-from django.db.models.query import QuerySet
-from django.views.generic import CreateView,  DeleteView, DetailView, ListView, UpdateView
+from django.views.generic import ListView
 from django.shortcuts import get_object_or_404
 from peak_wishlist.models import Parque, Pais
 
