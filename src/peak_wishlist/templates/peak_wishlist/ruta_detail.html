@@ -1,0 +1,50 @@
+{% extends 'peak_wishlist/base.html' %}
+
+{% block title %}Detalle de Ruta{% endblock %}
+
+{% block contenido %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">🥾 Detalle de Ruta</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>Ruta</h5>
+                            <p class="lead">{{ ruta.nombre }}</p>
+                            <p><strong>Montaña:</strong> {{ ruta.montana.nombre }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Características</h5>
+                            <p><strong>Tipo:</strong> {{ ruta.get_tipo_trayecto_display }}</p>
+                            <p><strong>Actividad:</strong> {{ ruta.get_actividad_display }}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <h5>Dificultad</h5>
+                            <p><strong>Exigencia:</strong> {{ ruta.get_exigencia_display }}</p>
+                            <p><strong>Técnica:</strong> {{ ruta.get_dificultad_tecnica_display }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Información</h5>
+                            <p><strong>Indicaciones inicio:</strong> {{ ruta.indicaciones_inicio_ruta }}</p>
+                            <p><strong>Descripción:</strong> {{ ruta.descripcion_ruta }}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <a href="{% url 'peak_wishlist:montanas' %}" class="btn btn-secondary">Volver</a>
+                        <a href="{% url 'peak_wishlist:ruta_update' ruta.pk %}" class="btn btn-warning ms-2">Editar</a>
+                        <a href="{% url 'peak_wishlist:ruta_delete' ruta.pk %}" class="btn btn-danger ms-2">Eliminar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

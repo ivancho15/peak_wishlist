@@ -1,0 +1,50 @@
+{% extends 'peak_wishlist/base.html' %}
+
+{% block title %}Detalle de Parque{% endblock %}
+
+{% block contenido %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">🏞️ Detalle de Parque</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>Parque</h5>
+                            <p class="lead">{{ parque.nombre }}</p>
+                            <p><strong>País:</strong> {{ parque.pais.nombre }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Contacto</h5>
+                            <p><strong>Teléfono:</strong> {{ parque.telefono }}</p>
+                            <p><strong>Email:</strong> {{ parque.correo }}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <h5>Información Adicional</h5>
+                            <p><strong>Sitio web:</strong> 
+                                {% if parque.web_site %}
+                                    <a href="{{ parque.web_site }}" target="_blank">{{ parque.web_site }}</a>
+                                {% else %}
+                                    No disponible
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <a href="{% url 'peak_wishlist:paises' %}" class="btn btn-secondary">Volver</a>
+                        <a href="{% url 'peak_wishlist:parque_update' parque.pk %}" class="btn btn-warning ms-2">Editar</a>
+                        <a href="{% url 'peak_wishlist:parque_delete' parque.pk %}" class="btn btn-danger ms-2">Eliminar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

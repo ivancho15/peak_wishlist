@@ -1,0 +1,54 @@
+{% extends 'peak_wishlist/base.html' %}
+
+{% block title %}Detalle de Excursión{% endblock %}
+
+{% block contenido %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">🥾 Detalle de Excursión</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>Ruta</h5>
+                            <p class="lead">{{ excursion.ruta.nombre }}</p>
+                            <p><strong>Montaña:</strong> {{ excursion.ruta.montana.nombre }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Fechas</h5>
+                            <p><strong>Inicio:</strong> {{ excursion.fecha_hora_inicio|date:"d/m/Y H:i" }}</p>
+                            <p><strong>Fin:</strong> {{ excursion.fecha_hora_fin|date:"d/m/Y H:i" }}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <h5>Proyecto</h5>
+                            <p>{% if excursion.proyecto %}{{ excursion.proyecto.nombre }}{% else %}Excursión Independiente{% endif %}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Estado</h5>
+                            <span class="badge 
+                                {% if excursion.estado == 'Cumbre/Completado' %}bg-success
+                                {% elif excursion.estado == 'Intento' %}bg-info
+                                {% elif excursion.estado == 'Planificado' %}bg-warning
+                                {% else %}bg-danger{% endif %}">
+                                {{ excursion.get_estado_display }}
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <a href="{% url 'peak_wishlist:excursiones' %}" class="btn btn-secondary">Volver</a>
+                        <a href="{% url 'peak_wishlist:excursion_update' excursion.pk %}" class="btn btn-warning ms-2">Editar</a>
+                        <a href="{% url 'peak_wishlist:excursion_delete' excursion.pk %}" class="btn btn-danger ms-2">Eliminar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

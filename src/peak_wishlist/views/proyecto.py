@@ -26,3 +26,22 @@ class ProyectoList(ListView):
             queryset = queryset.filter(Q(nombre__icontains=query) | Q(pais_destino__nombre__icontains=query))
 
         return queryset
+
+
+class ProyectoDetail(DetailView):
+    model = Proyecto
+    template_name = "peak_wishlist/proyecto_detail.html"
+    context_object_name = "proyecto"
+
+
+class ProyectoUpdate(UpdateView):
+    model = Proyecto
+    template_name = "peak_wishlist/proyecto_form.html"
+    fields = "__all__"
+    success_url = "/proyectos/"
+
+
+class ProyectoDelete(DeleteView):
+    model = Proyecto
+    template_name = "peak_wishlist/proyecto_confirm_delete.html"
+    success_url = "/proyectos/"

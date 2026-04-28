@@ -31,7 +31,9 @@ class MontanaList(ListView):
 
         query = self.request.GET.get("q")
         if query:
-            queryset = queryset.filter(Q(nombre__icontains=query) | Q(cordillera__icontains=query))
+            queryset = queryset.filter(
+                Q(nombre__icontains=query) | Q(cordillera__icontains=query)
+            )
 
         return queryset
 
@@ -66,3 +68,9 @@ class MontanaCreate(CreateView):
         context = super().get_context_data(**kwargs)
         context["url_cancelar"] = reverse_lazy("peak_wishlist:montanas")
         return context
+
+
+class MontanaDetail(DetailView):
+    model = Montana
+    template_name = "peak_wishlist/montana_detail.html"
+    context_object_name = "montana"

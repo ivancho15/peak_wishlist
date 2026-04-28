@@ -1,0 +1,37 @@
+{% extends 'peak_wishlist/base.html' %}
+
+{% block title %}Eliminar Proyecto{% endblock %}
+
+{% block contenido %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="mb-0">🗑️ Confirmar Eliminación</h4>
+                </div>
+                <div class="card-body">
+                    <p class="lead">¿Estás seguro de que deseas eliminar el siguiente proyecto?</p>
+                    
+                    <div class="alert alert-warning">
+                        <strong>Proyecto:</strong> {{ proyecto.nombre }}<br>
+                        <strong>País:</strong> {{ proyecto.pais_destino }}<br>
+                        <strong>Fechas:</strong> {{ proyecto.fecha_inicio|date:"d/m/Y" }} - {{ proyecto.fecha_fin|date:"d/m/Y" }}<br>
+                        <strong>Estado:</strong> {{ proyecto.get_estado_display }}
+                    </div>
+                    
+                    <p class="text-muted">Esta acción no se puede deshacer.</p>
+                    
+                    <div class="d-flex justify-content-between">
+                        <a href="{% url 'peak_wishlist:proyectos' %}" class="btn btn-secondary">Cancelar</a>
+                        <form method="post" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Eliminar Proyecto</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

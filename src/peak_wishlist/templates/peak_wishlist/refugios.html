@@ -28,7 +28,8 @@
             <tr>
                <th>Nombre</th>
                <th>Capacidad</th>      
-               <th>Servicios</th>   
+               <th>Servicios</th>
+               <th class="text-center">Acción</th>
             </tr>
         </thead>
         <tbody>
@@ -45,10 +46,17 @@
                         {{ refugio.servicios }} 
                     </span>
                 </td>
+                <td class="text-center">
+                    <a href="{% url 'peak_wishlist:refugio_detail' refugio.pk %}" 
+                       class="btn btn-sm btn-primary rounded-pill shadow-sm px-3" 
+                       style="font-size: 0.75rem; font-weight: 600;">
+                        🔍 Detalles
+                    </a>
+                </td>
             </tr>
             {% empty %}
             <tr>
-                <td colspan="5" class="text-center py-4 text-muted">
+                <td colspan="4" class="text-center py-4 text-muted">
                     No hay Refugios registrados registrados todavía. 
                 </td>
             </tr>

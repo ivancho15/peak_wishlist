@@ -58,3 +58,9 @@ class ParqueCreate(CreateView):
             kwargs={"pais_id": self.kwargs.get("pais_id")},
         )
         return context
+
+
+class ParqueDetail(DetailView):
+    model = Parque
+    template_name = "peak_wishlist/parque_detail.html"
+    context_object_name = "parque"

@@ -66,6 +66,13 @@ class RutaCreate(CreateView):
         return context
 
 
+class RutaDetail(DetailView):
+    model = Ruta
+    template_name = "peak_wishlist/ruta_detail.html"
+    context_object_name = "ruta"
+
+
+
 def obtener_dificultades(request):
     actividad = request.GET.get("actividad")
     mapeo = {

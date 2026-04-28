@@ -68,3 +68,10 @@ class RefugioCreate(CreateView):
         context["titulo_dinamico"] = f"🛖 Registrar Refugio en {montana.nombre}"
         context["url_cancelar"] = reverse_lazy("peak_wishlist:montanas")
         return context
+
+
+class RefugioDetail(DetailView):
+    model = Refugio
+    template_name = "peak_wishlist/refugio_detail.html"
+    context_object_name = "refugio"
+

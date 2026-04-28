@@ -1,0 +1,52 @@
+{% extends 'peak_wishlist/base.html' %}
+
+{% block title %}Detalle de Proyecto{% endblock %}
+
+{% block contenido %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">📆 Detalle de Proyecto</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>Proyecto</h5>
+                            <p class="lead">{{ proyecto.nombre }}</p>
+                            <p><strong>País destino:</strong> {{ proyecto.pais_destino }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Fechas</h5>
+                            <p><strong>Inicio:</strong> {{ proyecto.fecha_inicio|date:"d/m/Y" }}</p>
+                            <p><strong>Fin:</strong> {{ proyecto.fecha_fin|date:"d/m/Y" }}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <h5>Presupuesto</h5>
+                            <p>{{ proyecto.presupuesto_general|floatformat:2 }} €</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Estado</h5>
+                            <span class="badge 
+                                {% if proyecto.estado == 'Cumbre/Completado' %}bg-success
+                                {% else %}bg-warning{% endif %}">
+                                {{ proyecto.get_estado_display }}
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <a href="{% url 'peak_wishlist:proyectos' %}" class="btn btn-secondary">Volver</a>
+                        <a href="{% url 'peak_wishlist:proyecto_update' proyecto.pk %}" class="btn btn-warning ms-2">Editar</a>
+                        <a href="{% url 'peak_wishlist:proyecto_delete' proyecto.pk %}" class="btn btn-danger ms-2">Eliminar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

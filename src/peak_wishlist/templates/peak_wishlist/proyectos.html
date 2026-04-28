@@ -22,6 +22,7 @@
                 <th>Fin</th>
                 <th class="text-center">Excusiones</th>
                 <th class="text-center">Estado</th>
+                <th class="text-center">Acción</th>
             </tr>
         </thead>
         <tbody>
@@ -55,10 +56,29 @@
                         {% endif %}
                     </span>
                 </td>
+                <td class="text-center">
+                    <div class="btn-group" role="group">
+                        <a href="{% url 'peak_wishlist:proyecto_detail' proyecto.pk %}" 
+                           class="btn btn-sm btn-primary rounded-pill shadow-sm px-3" 
+                           style="font-size: 0.75rem; font-weight: 600;">
+                            🔍 Detalles
+                        </a>
+                        <a href="{% url 'peak_wishlist:proyecto_update' proyecto.pk %}" 
+                           class="btn btn-sm btn-warning rounded-pill shadow-sm px-3 ms-1" 
+                           style="font-size: 0.75rem; font-weight: 600;">
+                            ✏️ Editar
+                        </a>
+                        <a href="{% url 'peak_wishlist:proyecto_delete' proyecto.pk %}" 
+                           class="btn btn-sm btn-danger rounded-pill shadow-sm px-3 ms-1" 
+                           style="font-size: 0.75rem; font-weight: 600;">
+                            🗑️ Eliminar
+                        </a>
+                    </div>
+                </td>
             </tr>
             {% empty %}
             <tr>
-                <td colspan="5" class="text-center py-4 text-muted">
+                <td colspan="7" class="text-center py-4 text-muted">
                     No hay Proyectos registrados todavía. 
                 </td>
             </tr>

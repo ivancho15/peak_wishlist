@@ -66,3 +66,22 @@ class ExcursionList(ListView):
             context["extension_titulo"] = ""
 
         return context
+
+
+class ExcursionDetail(DetailView):
+    model = Excursion
+    template_name = "peak_wishlist/excursion_detail.html"
+    context_object_name = "excursion"
+
+
+class ExcursionUpdate(UpdateView):
+    model = Excursion
+    template_name = "peak_wishlist/excursion_form.html"
+    fields = "__all__"
+    success_url = "/excursiones/"
+
+
+class ExcursionDelete(DeleteView):
+    model = Excursion
+    template_name = "peak_wishlist/excursion_confirm_delete.html"
+    success_url = "/excursiones/"
