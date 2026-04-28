@@ -28,22 +28,18 @@
             <tr>
                <th>Nombre</th>
                <th>Capacidad</th>      
-               <th>Servicios</th>
                <th class="text-center">Acción</th>
             </tr>
         </thead>
         <tbody>
             {% for refugio in refugios %}
             <tr>
-                <td class="fw-bold text-primary">{{ refugio.nombre }}</td>
+                <td class="fw-bold text-primary">
+                    <div class="fw-bold text-primary">{{ refugio.nombre }}</div>
+                    <div class="text-muted small" style="font-size: 0.7rem;">{{ refugio.altitud }} msnm</td>
                 <td>
                     <span class="badge bg-light text-dark border">
                         {{ refugio.capacidad }} personas
-                    </span>
-                </td>
-                <td>
-                    <span class="badge bg-light text-dark border">
-                        {{ refugio.servicios }} 
                     </span>
                 </td>
                 <td class="text-center">

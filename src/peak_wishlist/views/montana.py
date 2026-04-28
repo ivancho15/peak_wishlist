@@ -32,7 +32,7 @@ class MontanaList(ListView):
         query = self.request.GET.get("q")
         if query:
             queryset = queryset.filter(
-                Q(nombre__icontains=query) | Q(cordillera__icontains=query)
+                Q(nombre__icontains=query) | Q(cordillera__icontains=query) | Q(pais__nombre__icontains=query)
             )
 
         return queryset

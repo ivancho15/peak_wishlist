@@ -10,14 +10,15 @@
 </div>
 
 <h2 class="mb-4 text-dark fw-bold">📆🏕️✈️ Listado de Proyectos</h2>
-
+<a href="#" class="btn btn-dark rounded-pill shadow-sm">
+        ➕ Crear Nuevo Proyecto
+</a>
 {% include 'peak_wishlist/componentes/search_bar.html' %}
 <div class="table-container-custom table-responsive">
     <table class="table table-custom mb-0">
         <thead>
             <tr>
                 <th>Proyecto</th>
-                <th>Pais</th>
                 <th>Inicio</th>
                 <th>Fin</th>
                 <th class="text-center">Excusiones</th>
@@ -28,11 +29,9 @@
         <tbody>
             {% for proyecto in proyectos %}
             <tr>
-                <td class="fw-bold text-primary">{{ proyecto.nombre }}</td>
-                <td>
-                    <span class="badge bg-light text-dark border">
-                        {{ proyecto.pais_destino }}
-                    </span>
+                <td class="fw-bold text-primary">
+                    <div class="fw-bold text-primary">{{ proyecto.nombre }}</div>
+                    <div class="text-muted small" style="font-size: 0.7rem;">{{ proyecto.pais_destino }}</div>
                 </td>
                 <td>
                     <span class="badge bg-light text-dark border">

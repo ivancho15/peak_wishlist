@@ -11,6 +11,9 @@
 </div>
 
 <h2 class="mb-4 text-dark fw-bold">🥾🚵‍♂️🧗Listado de Excusiones {{ extension_titulo }}</h2>
+<a href="#" class="btn btn-dark rounded-pill shadow-sm">
+        ➕ Registrar nueva excursion
+</a>
 {% include 'peak_wishlist/componentes/search_bar.html' %}
 <div class="table-container-custom table-responsive">
     <table class="table table-custom mb-0">
@@ -27,7 +30,10 @@
         <tbody>
             {% for excursion in excursiones %}
             <tr>
-               <td class="fw-bold text-primary">{{ excursion.ruta.nombre }} -  {{ excursion.ruta.montana.nombre }}</td>
+                <td class="fw-bold text-primary">
+                    <div class="fw-bold text-primary">{{ excursion.ruta.nombre }}</div>
+                    <div class="text-muted small" style="font-size: 0.7rem;">{{ excursion.ruta.montana.nombre }}</div>
+                </td>
                <td>
                     <span class="badge bg-light text-dark border">
                         {{ excursion.fecha_hora_inicio|date:"d \d\e M \d\e Y"}} 

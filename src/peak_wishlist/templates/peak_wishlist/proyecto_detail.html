@@ -1,48 +1,123 @@
 {% extends 'peak_wishlist/base.html' %}
 
-{% block title %}Detalle de Proyecto{% endblock %}
+{% block title %}Proyecto | {{ proyecto.nombre }}{% endblock %}
 
 {% block contenido %}
-<div class="container mt-5">
+<div class="container mt-4">
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'peak_wishlist:proyectos' %}" class="text-decoration-none">Proyectos</a></li>
+            <li class="breadcrumb-item active">{{ proyecto.nombre }}</li>
+        </ol>
+    </nav>
+
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card shadow">
-                <div class="card-header bg-primary text-white">
-                    <h4 class="mb-0">📆 Detalle de Proyecto</h4>
+        <div class="col-md-11">
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                
+                <div class="card-header py-5 text-center text-white" 
+                     style="background: linear-gradient(135deg, #311b92 0%, #673ab7 100%);">
+                    <span class="text-uppercase tracking-widest small opacity-75">Planificación de Objetivo</span>
+                    <h1 class="display-5 fw-bold mb-0">📅 {{ proyecto.nombre|upper }}</h1>
+                    <div class="mt-3">
+                        <span class="badge rounded-pill bg-white text-primary px-4 py-2 shadow-sm fw-bold">
+                            {{ proyecto.get_estado_display }}
+                        </span>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h5>Proyecto</h5>
-                            <p class="lead">{{ proyecto.nombre }}</p>
-                            <p><strong>País destino:</strong> {{ proyecto.pais_destino }}</p>
+
+                <div class="card-body p-4 p-lg-5">
+                    <div class="row g-4 mb-5 text-center">
+                        <div class="col-md-4">
+                            <div class="p-3 border rounded-4 bg-light shadow-sm">
+                                <small class="text-muted d-block fw-bold text-uppercase" style="font-size: 0.65rem;">Presupuesto General</small>
+                                <span class="fs-4 fw-bold text-success">{{ proyecto.presupuesto_general }}</span>
+                            </div>
                         </div>
-                        <div class="col-md-6">
-                            <h5>Fechas</h5>
-                            <p><strong>Inicio:</strong> {{ proyecto.fecha_inicio|date:"d/m/Y" }}</p>
-                            <p><strong>Fin:</strong> {{ proyecto.fecha_fin|date:"d/m/Y" }}</p>
+                        <div class="col-md-4">
+                            <div class="p-3 border rounded-4 bg-light shadow-sm">
+                                <small class="text-muted d-block fw-bold text-uppercase" style="font-size: 0.65rem;">País Destino</small>
+                                <span class="fs-4 fw-bold text-dark">🌍 {{ proyecto.pais_destino.nombre }}</span>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div class="row mt-3">
-                        <div class="col-md-6">
-                            <h5>Presupuesto</h5>
-                            <p>{{ proyecto.presupuesto_general|floatformat:2 }} €</p>
-                        </div>
-                        <div class="col-md-6">
-                            <h5>Estado</h5>
-                            <span class="badge 
-                                {% if proyecto.estado == 'Cumbre/Completado' %}bg-success
-                                {% else %}bg-warning{% endif %}">
-                                {{ proyecto.get_estado_display }}
-                            </span>
+                        <div class="col-md-4">
+                            <div class="p-3 border rounded-4 bg-light shadow-sm">
+                                <small class="text-muted d-block fw-bold text-uppercase" style="font-size: 0.65rem;">Duración Planificada</small>
+                                <span class="small fw-bold text-dark d-block">
+                                    {{ proyecto.fecha_inicio|date:"d/m/Y" }} — {{ proyecto.fecha_fin|date:"d/m/Y" }}
+                                </span>
+                            </div>
                         </div>
                     </div>
-                    
-                    <div class="mt-4">
-                        <a href="{% url 'peak_wishlist:proyectos' %}" class="btn btn-secondary">Volver</a>
-                        <a href="{% url 'peak_wishlist:proyecto_update' proyecto.pk %}" class="btn btn-warning ms-2">Editar</a>
-                        <a href="{% url 'peak_wishlist:proyecto_delete' proyecto.pk %}" class="btn btn-danger ms-2">Eliminar</a>
+
+                    <div class="row g-5">
+                        <div class="col-lg-5">
+                            <div class="p-4 rounded-4 border bg-white shadow-sm mb-4">
+                                <h6 class="fw-bold mb-3 text-uppercase small text-muted">
+                                    <i class="bi bi-people-fill me-2"></i>Equipo de Trabajo / Compañeros
+                                </h6>
+                                <div class="text-dark fs-6">
+                                    {{ proyecto.companeros|linebreaks }}
+                                </div>
+                            </div>
+
+                            <div class="p-4 rounded-4 bg-dark text-white shadow-sm">
+                                <h6 class="fw-bold mb-3 text-uppercase small text-warning">Progreso del Proyecto</h6>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span>Excursiones vinculadas:</span>
+                                    <span class="badge bg-warning text-dark fs-6">{{ proyecto.actividades.count }}</span>
+                                </div>
+                                <div class="mt-3 small text-white-50 fst-italic">
+                                    Este proyecto agrupa todas las salidas y gastos relacionados con el objetivo "{{ proyecto.nombre }}".
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-7">
+                            <h4 class="fw-bold text-dark mb-3">Actividades del Proyecto</h4>
+                            <div class="list-group list-group-flush border rounded-4 overflow-hidden shadow-sm">
+                                {% for salida in proyecto.actividades.all %}
+                                    <a href="{% url 'peak_wishlist:excursion_detail' salida.pk %}" class="list-group-item list-group-item-action p-3">
+                                        <div class="d-flex w-100 justify-content-between align-items-center">
+                                            <div>
+                                                <h6 class="mb-1 fw-bold">{{ salida.ruta.montana.nombre }} ➡️ {{ salida.ruta.nombre }} </h6> 
+                                                <small class="text-muted">{{ salida.fecha_hora_inicio|date:"d M, Y" }}</small>
+                                            </div>
+                                            <span class="badge rounded-pill {% if salida.estado == 'Cumbre/Completado' %}bg-success{% else %}bg-info{% endif %}">
+                                                {{ salida.get_estado_display }}
+                                            </span>
+                                        </div>
+                                    </a>
+                                {% empty %}
+                                    <div class="p-4 text-center text-muted">
+                                        <p class="mb-0 fst-italic">No hay excursiones registradas para este proyecto aún.</p>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            {% if  proyecto.get_estado_display != 'Completado' %}
+                                <div class="mt-4">
+                                    <a href="#" class="btn btn-outline-primary w-100 rounded-pill">
+                                        ➕ Vincular nueva excursión
+                                    </a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-footer bg-light p-4">
+                    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+                        <a href="{% url 'peak_wishlist:proyectos' %}" class="btn btn-outline-dark rounded-pill px-4">
+                            ⬅️ Volver a Proyectos
+                        </a>
+                        <div class="d-flex gap-2">
+                            <a href="{% url 'peak_wishlist:proyecto_update' proyecto.pk %}" class="btn btn-warning rounded-pill px-4">
+                                ✏️ Editar
+                            </a>
+                            <a href="{% url 'peak_wishlist:proyecto_delete' proyecto.pk %}" class="btn btn-danger rounded-pill px-4">
+                                🗑️ Eliminar
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

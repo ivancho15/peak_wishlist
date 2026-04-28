@@ -1,46 +1,126 @@
 {% extends 'peak_wishlist/base.html' %}
 
-{% block title %}Detalle de Ruta{% endblock %}
+{% block title %}Ruta | {{ ruta.nombre }}{% endblock %}
 
 {% block contenido %}
-<div class="container mt-5">
+<div class="container mt-4">
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'peak_wishlist:montanas' %}" class="text-decoration-none">Montañas</a></li>
+            <li class="breadcrumb-item">
+                <a href="{% url 'peak_wishlist:montana_detail' ruta.montana.id %}" class="text-decoration-none">{{ ruta.montana.nombre }}</a>
+            </li>
+            <li class="breadcrumb-item active">{{ ruta.nombre }}</li>
+        </ol>
+    </nav>
+
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card shadow">
-                <div class="card-header bg-primary text-white">
-                    <h4 class="mb-0">🥾 Detalle de Ruta</h4>
+        <div class="col-md-12">
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                
+                <div class="card-header py-5 text-center text-white" 
+                     style="background: linear-gradient(135deg, #2c3e50 0%, #000000 100%);">
+                    <span class="text-uppercase tracking-widest small opacity-75">Guía de Ruta</span>
+                    <h1 class="display-5 fw-bold mb-0">{{ ruta.nombre|upper }}</h1>
+                    <div class="mt-3">
+                        <span class="badge rounded-pill bg-warning text-dark px-3 py-2 shadow-sm">
+                            {{ ruta.get_actividad_display }}
+                        </span>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h5>Ruta</h5>
-                            <p class="lead">{{ ruta.nombre }}</p>
-                            <p><strong>Montaña:</strong> {{ ruta.montana.nombre }}</p>
+
+                <div class="card-body p-4 p-lg-5">
+                    <div class="row g-3 mb-5 text-center">
+                        <div class="col-6 col-md-3">
+                            <div class="p-3 border rounded-4 bg-light">
+                                <small class="text-muted d-block fw-bold text-uppercase" style="font-size: 0.65rem;">Distancia</small>
+                                <span class="fs-4 fw-bold text-dark">{{ ruta.distancia }} km</span>
+                            </div>
                         </div>
-                        <div class="col-md-6">
-                            <h5>Características</h5>
-                            <p><strong>Tipo:</strong> {{ ruta.get_tipo_trayecto_display }}</p>
-                            <p><strong>Actividad:</strong> {{ ruta.get_actividad_display }}</p>
+                        <div class="col-6 col-md-3">
+                            <div class="p-3 border rounded-4 bg-light">
+                                <small class="text-muted d-block fw-bold text-uppercase" style="font-size: 0.65rem;">Desnivel (+)</small>
+                                <span class="fs-4 fw-bold text-success">+{{ ruta.desnivel_positivo }} m</span>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <div class="p-3 border rounded-4 bg-light">
+                                <small class="text-muted d-block fw-bold text-uppercase" style="font-size: 0.65rem;">Tiempo Est.</small>
+                                <span class="fs-4 fw-bold text-dark">{{ ruta.tiempo_estimado }} {{ ruta.get_unidad_tiempo_estimado_display }}</span>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <div class="p-3 border rounded-4 bg-light">
+                                <small class="text-muted d-block fw-bold text-uppercase" style="font-size: 0.65rem;">Trayecto</small>
+                                <span class="fs-4 fw-bold text-dark">{{ ruta.get_tipo_trayecto_display }}</span>
+                            </div>
                         </div>
                     </div>
-                    
-                    <div class="row mt-3">
-                        <div class="col-md-6">
-                            <h5>Dificultad</h5>
-                            <p><strong>Exigencia:</strong> {{ ruta.get_exigencia_display }}</p>
-                            <p><strong>Técnica:</strong> {{ ruta.get_dificultad_tecnica_display }}</p>
+
+                    <div class="row g-5">
+                        <div class="col-lg-4">
+                            <div class="p-4 rounded-4 bg-dark text-white shadow-sm mb-4">
+                                <h6 class="fw-bold mb-3 text-uppercase small text-warning">Evaluación de Riesgo</h6>
+                                <div class="mb-3">
+                                    <label class="small opacity-75 d-block">Dificultad Técnica:</label>
+                                    <span class="fw-bold">{{ ruta.dificultad_tecnica }}</span>
+                                </div>
+                                <div class="mb-0">
+                                    <label class="small opacity-75 d-block">Exigencia Física:</label>
+                                    <span class="fw-bold">{{ ruta.get_exigencia_display }}</span>
+                                </div>
+                            </div>
+
+                            <div class="p-4 rounded-4 border border-2 bg-white shadow-sm">
+                                <h6 class="fw-bold mb-3 text-uppercase small"><i class="bi bi-backpack2 me-2"></i>Equipo Sugerido</h6>
+                                <div class="text-secondary small lh-base">
+                                    {{ ruta.equipo_sugerido|linebreaks }}
+                                </div>
+                            </div>
+                            
+                            {% if ruta.gps_trakking %}
+                            <a href="{{ ruta.gps_trakking }}" target="_blank" class="btn btn-primary w-100 rounded-pill mt-4 shadow-sm">
+                                🗺️ Ver Track (GPS/WikiLoc)
+                            </a>
+                            {% endif %}
                         </div>
-                        <div class="col-md-6">
-                            <h5>Información</h5>
-                            <p><strong>Indicaciones inicio:</strong> {{ ruta.indicaciones_inicio_ruta }}</p>
-                            <p><strong>Descripción:</strong> {{ ruta.descripcion_ruta }}</p>
+
+                        <div class="col-lg-8">
+                            <div class="mb-5">
+                                <h4 class="fw-bold text-dark mb-3">Información General</h4>
+                                <div class="text-secondary fs-5 lh-base">
+                                    {{ ruta.informacion_general|linebreaks|default:"Sin información general." }}
+                                </div>
+                            </div>
+
+                            <div class="p-4 rounded-4 bg-info bg-opacity-10 border-start border-4 border-info mb-4">
+                                <h6 class="fw-bold text-info text-uppercase small">📍 Cómo empezar</h6>
+                                <p class="mb-0 text-dark">{{ ruta.indicaciones_inicio_ruta|default:"No se han registrado indicaciones." }}</p>
+                            </div>
+
+                            {% if ruta.observaciones %}
+                            <div class="p-4 rounded-4 bg-light border shadow-sm">
+                                <h6 class="fw-bold text-muted text-uppercase small">📝 Observaciones Adicionales</h6>
+                                <div class="small text-secondary">{{ ruta.observaciones|linebreaks }}</div>
+                            </div>
+                            {% endif %}
                         </div>
                     </div>
-                    
-                    <div class="mt-4">
-                        <a href="{% url 'peak_wishlist:montanas' %}" class="btn btn-secondary">Volver</a>
-                        <a href="{% url 'peak_wishlist:ruta_update' ruta.pk %}" class="btn btn-warning ms-2">Editar</a>
-                        <a href="{% url 'peak_wishlist:ruta_delete' ruta.pk %}" class="btn btn-danger ms-2">Eliminar</a>
+                </div>
+
+                <div class="card-footer bg-light p-4">
+                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                        <div class="text-muted small">
+                            <strong>{{ ruta.excursion_set.count }}</strong> excursiones registradas en esta ruta.
+                        </div>
+                        <div class="d-flex gap-2">
+                            <a href="{% url 'peak_wishlist:montana_detail' ruta.montana.id %}" class="btn btn-outline-dark rounded-pill px-4">
+                                Volver a {{ ruta.montana.nombre }}
+                            </a>
+                            <a href="#" class="btn btn-dark rounded-pill px-4">
+                                Registrar Cumbre
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -1,50 +1,117 @@
 {% extends 'peak_wishlist/base.html' %}
 
-{% block title %}Detalle de Parque{% endblock %}
+{% block title %}Detalle | {{ parque.nombre }}{% endblock %}
 
 {% block contenido %}
-<div class="container mt-5">
+<div class="container mt-4">
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'peak_wishlist:paises' %}" class="text-decoration-none">Países y Parques</a></li>
+            <li class="breadcrumb-item active">{{ parque.nombre }}</li>
+        </ol>
+    </nav>
+
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card shadow">
-                <div class="card-header bg-primary text-white">
-                    <h4 class="mb-0">🏞️ Detalle de Parque</h4>
+        <div class="col-md-10">
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                
+                <div class="card-header py-5 text-center text-white" 
+                     style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);">
+                    <h1 class="display-4 fw-bold mb-0">🏞️ {{ parque.nombre|upper }}</h1>
+                    <div class="mt-2">
+                        <span class="badge rounded-pill bg-white text-primary px-4 py-2 fs-6 shadow-sm">
+                            📍 {{ parque.pais.nombre }}
+                        </span>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h5>Parque</h5>
-                            <p class="lead">{{ parque.nombre }}</p>
-                            <p><strong>País:</strong> {{ parque.pais.nombre }}</p>
+
+                <div class="card-body p-4 p-lg-5">
+                    <div class="row g-5">
+                        <div class="col-lg-4">
+                            <div class="p-4 rounded-4 bg-light shadow-sm border-0 h-100">
+                                <h5 class="fw-bold mb-4 text-dark"><i class="bi bi-info-square me-2"></i>Gestión del Área</h5>
+                                
+                                <div class="mb-3">
+                                    <label class="small text-muted d-block text-uppercase fw-bold">Tipo de Administración</label>
+                                    <span class="badge {% if parque.tipo == 'Publico' %}bg-info{% else %}bg-secondary{% endif %} rounded-pill px-3">
+                                        {{ parque.tipo|upper }}
+                                    </span>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label class="small text-muted d-block text-uppercase fw-bold mb-2">Contacto Directo</label>
+                                    <div class="small">
+                                        <p class="mb-1"><strong>📞 Tel:</strong> {{ parque.telefono|default:"No registrado" }}</p>
+                                        <p class="mb-1"><strong>📧 Email:</strong> 
+                                            {% if parque.correo %}
+                                                <a href="mailto:{{ parque.correo }}" class="text-decoration-none">{{ parque.correo }}</a>
+                                            {% else %}
+                                                No registrado
+                                            {% endif %}
+                                        </p>
+                                        <p class="mb-0"><strong>🌐 Web:</strong> 
+                                            {% if parque.web_site %}
+                                                <a href="{{ parque.web_site }}" target="_blank" class="text-decoration-none text-truncate d-inline-block" style="max-width: 150px;">Enlace externo</a>
+                                            {% else %}
+                                                No disponible
+                                            {% endif %}
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="mt-auto pt-4 border-top">
+                                    <div class="text-center p-3 bg-white rounded-4 shadow-sm">
+                                        <h3 class="fw-bold text-primary mb-0">{{ parque.montana_set.count }}</h3>
+                                        <small class="text-muted text-uppercase fw-bold" style="font-size: 0.65rem;">Montañas Registradas</small>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-md-6">
-                            <h5>Contacto</h5>
-                            <p><strong>Teléfono:</strong> {{ parque.telefono }}</p>
-                            <p><strong>Email:</strong> {{ parque.correo }}</p>
-                        </div>
-                    </div>
-                    
-                    <div class="row mt-3">
-                        <div class="col-md-12">
-                            <h5>Información Adicional</h5>
-                            <p><strong>Sitio web:</strong> 
-                                {% if parque.web_site %}
-                                    <a href="{{ parque.web_site }}" target="_blank">{{ parque.web_site }}</a>
+
+                        <div class="col-lg-8">
+                            <h4 class="fw-bold text-dark mb-3">Información del Área</h4>
+                            <div class="text-secondary fs-5 lh-base" style="text-align: justify;">
+                                {% if parque.informacion_general %}
+                                    {{ parque.informacion_general|linebreaks }}
                                 {% else %}
-                                    No disponible
+                                    <p class="fst-italic text-muted">No hay una descripción detallada registrada para este parque o reserva.</p>
                                 {% endif %}
-                            </p>
+                            </div>
+
+                            <div class="mt-5">
+                                <h6 class="text-uppercase fw-bold text-muted mb-3 small">Acciones disponibles</h6>
+                                <div class="row g-3">
+                                    <div class="col-md-12">
+                                        <a href="{% url 'peak_wishlist:montanas_por_parque' parque.id%}" class="card text-decoration-none bg-dark text-white p-3 rounded-4 shadow-sm h-100 hover-zoom">
+                                            <div class="card border-0 bg-dark text-white p-4 rounded-4 shadow-sm">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <div>
+                                                        <h5 class="mb-1">Explorar Elevaciones</h5>
+                                                        <p class="mb-0 text-white-50 small">Ver todas las montañas ubicadas dentro de {{ parque.nombre }}</p>
+                                                    </div>
+                                                    <span class="fs-1">🏔️</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    
-                    <div class="mt-4">
-                        <a href="{% url 'peak_wishlist:paises' %}" class="btn btn-secondary">Volver</a>
-                        <a href="{% url 'peak_wishlist:parque_update' parque.pk %}" class="btn btn-warning ms-2">Editar</a>
-                        <a href="{% url 'peak_wishlist:parque_delete' parque.pk %}" class="btn btn-danger ms-2">Eliminar</a>
-                    </div>
+                </div>
+
+                <div class="card-footer bg-light p-4 text-center">
+                    <a href="{% url 'peak_wishlist:paises' %}" class="btn btn-outline-dark rounded-pill px-5">
+                        Volver a Países y Parques
+                    </a>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<style>
+    .card-header { border-bottom: none; }
+    .breadcrumb-item + .breadcrumb-item::before { content: "›"; color: #6c757d; }
+</style>
 {% endblock %}

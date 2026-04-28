@@ -1,37 +1,122 @@
 {% extends 'peak_wishlist/base.html' %}
 
-{% block title %}Detalle de Refugio{% endblock %}
+{% block title %}Detalle | {{ refugio.nombre }}{% endblock %}
 
 {% block contenido %}
-<div class="container mt-5">
+<div class="container mt-4">
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'peak_wishlist:montanas' %}" class="text-decoration-none">Montañas</a></li>
+            <li class="breadcrumb-item">
+                <a href="{% url 'peak_wishlist:montana_detail' refugio.montana.id %}" class="text-decoration-none">{{ refugio.montana.nombre }}</a>
+            </li>
+            <li class="breadcrumb-item active">{{ refugio.nombre }}</li>
+        </ol>
+    </nav>
+
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card shadow">
-                <div class="card-header bg-primary text-white">
-                    <h4 class="mb-0">🛖 Detalle de Refugio</h4>
+        <div class="col-md-10">
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                
+                <div class="card-header py-5 text-center text-white" 
+                     style="background: linear-gradient(135deg, #5d4037 0%, #8d6e63 100%);">
+                    <h1 class="display-4 fw-bold mb-0">🛖 {{ refugio.nombre|upper }}</h1>
+                    <div class="mt-2">
+                        <span class="badge rounded-pill bg-white text-dark px-4 py-2 fs-6 shadow-sm">
+                            ⛰️ Ubicado en: {{ refugio.montana.nombre }}
+                        </span>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h5>Refugio</h5>
-                            <p class="lead">{{ refugio.nombre }}</p>
-                            <p><strong>Montaña:</strong> {{ refugio.montana.nombre }}</p>
+
+                <div class="card-body p-4 p-lg-5">
+                    <div class="row g-5">
+                        <div class="col-lg-4">
+                            <div class="p-4 rounded-4 bg-light shadow-sm border-0 h-100">
+                                <h5 class="fw-bold mb-4 text-dark"><i class="bi bi-House-door me-2"></i>Logística</h5>
+                                
+                                <div class="mb-3">
+                                    <label class="small text-muted d-block text-uppercase fw-bold">Capacidad Total</label>
+                                    <span class="fs-5 fw-bold text-dark">👥 {{ refugio.capacidad|default:"Consultar" }} personas</span>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="small text-muted d-block text-uppercase fw-bold">Altitud del Emplazamiento</label>
+                                    <span class="text-primary fw-bold">{{ refugio.altitud }} msnm</span>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label class="small text-muted d-block text-uppercase fw-bold">Costo por Noche</label>
+                                    <span class="badge bg-success fs-6 rounded-pill px-3">
+                                        💰 {{ refugio.costo|default:"A convenir" }}
+                                    </span>
+                                </div>
+
+                                <hr>
+
+                                <h6 class="fw-bold mt-4 mb-2 text-dark">Contacto de Reserva:</h6>
+                                <div class="small">
+                                    <p class="mb-1"><strong>📞 Tel:</strong> {{ refugio.telf_contacto|default:"No disponible" }}</p>
+                                    <p class="mb-0"><strong>📧 Email:</strong> 
+                                        {% if refugio.correo_contacto %}
+                                            <a href="mailto:{{ refugio.correo_contacto }}" class="text-decoration-none">{{ refugio.correo_contacto }}</a>
+                                        {% else %}
+                                            No registrado
+                                        {% endif %}
+                                    </p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-md-6">
-                            <h5>Características</h5>
-                            <p><strong>Capacidad:</strong> {{ refugio.capacidad }} personas</p>
-                            <p><strong>Servicios:</strong> {{ refugio.servicios }}</p>
+
+                        <div class="col-lg-8">
+                            <h4 class="fw-bold text-dark mb-3">Servicios y Comodidades</h4>
+                            <div class="p-4 rounded-4 border-start border-4 border-warning bg-warning bg-opacity-10 mb-4">
+                                <div class="text-secondary fs-5 lh-base">
+                                    {% if refugio.servicios %}
+                                        {{ refugio.servicios|linebreaks }}
+                                    {% else %}
+                                        <p class="fst-italic text-muted">No se han detallado los servicios para este refugio.</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="mt-5">
+                                <h6 class="text-uppercase fw-bold text-muted mb-3 small">Explorar entorno</h6>
+                                <div class="row g-3">
+                                    <div class="col-md-12">
+                                        <a href="{% url 'peak_wishlist:montana_detail' refugio.montana.id %}" class="card text-decoration-none border-0 bg-dark text-white p-4 rounded-4 shadow-sm hover-zoom">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    <h5 class="mb-1">Volver a {{ refugio.montana.nombre }}</h5>
+                                                    <p class="mb-0 text-white-50 small">Ver rutas de ascenso y otras instalaciones</p>
+                                                </div>
+                                                <span class="fs-1">🏔️</span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    
-                    <div class="mt-4">
-                        <a href="{% url 'peak_wishlist:montanas' %}" class="btn btn-secondary">Volver</a>
-                        <a href="{% url 'peak_wishlist:refugio_update' refugio.pk %}" class="btn btn-warning ms-2">Editar</a>
-                        <a href="{% url 'peak_wishlist:refugio_delete' refugio.pk %}" class="btn btn-danger ms-2">Eliminar</a>
-                    </div>
+                </div>
+
+                <div class="card-footer bg-light p-4 text-center">
+                    <a href="{% url 'peak_wishlist:montanas' %}" class="btn btn-outline-dark rounded-pill px-5">
+                        Volver al Listado de Montañas
+                    </a>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<style>
+    .hover-zoom {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .hover-zoom:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+        color: white;
+    }
+</style>
 {% endblock %}

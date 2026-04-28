@@ -1,54 +1,143 @@
 {% extends 'peak_wishlist/base.html' %}
 
-{% block title %}Detalle de Montaña{% endblock %}
+{% block title %}Detalle | {{ montana.nombre }}{% endblock %}
 
 {% block contenido %}
-<div class="container mt-5">
+<div class="container mt-4">
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'peak_wishlist:montanas' %}" class="text-decoration-none">Montañas</a></li>
+            <li class="breadcrumb-item active">{{ montana.nombre }}</li>
+        </ol>
+    </nav>
+
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card shadow">
-                <div class="card-header bg-primary text-white">
-                    <h4 class="mb-0">⛰️ Detalle de Montaña</h4>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h5>Montaña</h5>
-                            <p class="lead">{{ montana.nombre }}</p>
-                            <p><strong>Cordillera:</strong> {{ montana.cordillera }}</p>
-                        </div>
-                        <div class="col-md-6">
-                            <h5>Características</h5>
-                            <p><strong>Altitud:</strong> {{ montana.altitud }} msnm</p>
-                            <p><strong>Acceso:</strong> 
-                                {% if montana.requiere_permiso %}
-                                    <span class="badge bg-warning text-dark">Requiere Permiso</span>
-                                {% else %}
-                                    <span class="badge bg-success">Acceso Libre</span>
-                                {% endif %}
-                            </p>
-                        </div>
+        <div class="col-md-10">
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                
+                <div class="card-header py-5 text-center text-white" 
+                     style="background: linear-gradient(rgba(44, 62, 80, 0.8), rgba(44, 62, 80, 0.8)), url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=1000') center/cover;">
+                    <h1 class="display-4 fw-bold mb-0">{{ montana.nombre|upper }}</h1>
+                    <div class="mt-2">
+                        <span class="badge rounded-pill bg-primary px-4 py-2 fs-5 shadow">
+                            🏔️ {{ montana.altitud }} msnm
+                        </span>
                     </div>
-                    
-                    <div class="row mt-3">
-                        <div class="col-md-12">
-                            <h5>Países</h5>
-                            <div class="d-flex flex-wrap gap-2">
-                                {% for pais in montana.pais.all %}
-                                    <span class="badge bg-light text-dark border">{{ pais.nombre }}</span>
-                                {% endfor %}
+                </div>
+
+                <div class="card-body p-4 p-lg-5">
+                    <div class="row g-5">
+                        <div class="col-lg-4">
+                            <div class="p-4 rounded-4 bg-light shadow-sm border-0">
+                                <h5 class="fw-bold mb-4 text-dark"><i class="bi bi-info-circle me-2"></i>Ficha Técnica</h5>
+                                
+                                <div class="mb-3">
+                                    <label class="small text-muted d-block text-uppercase fw-bold">Altitud Máxima</label>
+                                    <span class="fs-5 fw-bold text-primary">{{ montana.altitud }} metros</span>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="small text-muted d-block text-uppercase fw-bold">Cordillera / Sistema</label>
+                                    <span class="text-dark">{{ montana.cordillera|default:"No registrada" }}</span>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="small text-muted d-block text-uppercase fw-bold">Estado de Acceso</label>
+                                    {% if montana.requiere_permiso %}
+                                        <span class="badge bg-warning text-dark rounded-pill px-3">⚠️ Requiere Permiso</span>
+                                    {% else %}
+                                        <span class="badge bg-success rounded-pill px-3">✅ Acceso Libre</span>
+                                    {% endif %}
+                                </div>
+
+                                <div class="mb-0">
+                                    <label class="small text-muted d-block text-uppercase fw-bold mb-2">Ubicación</label>
+                                    <div class="d-flex flex-wrap gap-1">
+                                        {% for pais in montana.pais.all %}
+                                            <span class="badge bg-white text-dark border shadow-sm">{{ pais.nombre }}</span>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+
+                                {% if montana.parque %}
+                                <div class="mt-4 pt-4 border-top">
+                                    <label class="small text-primary d-block text-uppercase fw-bold mb-1">Área Protegida</label>
+                                    <div class="d-flex align-items-center">
+                                        <span class="fs-3 me-2">🌳</span>
+                                        <div>
+                                            <p class="mb-0 fw-bold text-dark">{{ montana.parque.nombre }}</p>
+                                            <p><small class="text-muted">{{ montana.parque.tipo }}</small></p>
+                                            <small class="text-muted"> 
+                                                <a href="{% url 'peak_wishlist:parque_detail' montana.parque.pk %}" class="text-decoration-none fw-bold">
+                                                    🔎 Ver información
+                                                </a>
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="col-lg-8">
+                            <h4 class="fw-bold text-dark mb-3">Información General</h4>
+                            <div class="text-secondary fs-5 lh-base" style="text-align: justify;">
+                                {% if montana.informacion_general %}
+                                    {{ montana.informacion_general|linebreaks }}
+                                {% else %}
+                                    <p class="fst-italic text-muted">No se ha cargado una descripción detallada para esta elevación todavía.</p>
+                                {% endif %}
+                            </div>
+
+                            <div class="row g-3 mt-4">
+                                <div class="col-md-6">
+                                    <a href="{% url 'peak_wishlist:rutas_por_montana' montana.id %}" class="card text-decoration-none bg-dark text-white p-3 rounded-4 shadow-sm h-100 hover-zoom">
+                                        <div class="d-flex align-items-center">
+                                            <span class="fs-2 me-3">🥾</span>
+                                            <div>
+                                                <h6 class="mb-0">Explorar Rutas</h6>
+                                                <small class="text-white-50">Ver tracks y dificultades</small>
+                                                <small class="text-white-50">
+                                                {{ montana.ruta_set.count }} ruta{{ montana.ruta_set.count|pluralize }} registrada{{ montana.ruta_set.count|pluralize }}
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-md-6">
+                                    <a href="{% url 'peak_wishlist:excursiones_por_montana' montana.id %}" class="card text-decoration-none bg-primary text-white p-3 rounded-4 shadow-sm h-100 hover-zoom">
+                                        <div class="d-flex align-items-center">
+                                            <span class="fs-2 me-3">🧗</span>
+                                            <div>
+                                                <h6 class="mb-0">Historial de Salidas</h6>
+                                                <small class="text-white-50">Registros de ascensiones</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    
-                    <div class="mt-4">
-                        <a href="{% url 'peak_wishlist:montanas' %}" class="btn btn-secondary">Volver</a>
-                        <a href="{% url 'peak_wishlist:montana_update' montana.pk %}" class="btn btn-warning ms-2">Editar</a>
-                        <a href="{% url 'peak_wishlist:montana_delete' montana.pk %}" class="btn btn-danger ms-2">Eliminar</a>
-                    </div>
+                </div>
+
+                <div class="card-footer bg-light p-4 text-center">
+                    <a href="{% url 'peak_wishlist:montanas' %}" class="btn btn-outline-dark rounded-pill px-5">
+                        Volver al Listado General
+                    </a>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<style>
+    .hover-zoom {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .hover-zoom:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.15) !important;
+        color: white;
+    }
+</style>
 {% endblock %}

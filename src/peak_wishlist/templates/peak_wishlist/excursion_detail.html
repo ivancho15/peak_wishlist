@@ -1,50 +1,114 @@
 {% extends 'peak_wishlist/base.html' %}
 
-{% block title %}Detalle de Excursión{% endblock %}
+{% block title %}Excursión | {{ excursion.ruta.nombre }}{% endblock %}
 
 {% block contenido %}
-<div class="container mt-5">
+<div class="container mt-4">
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'peak_wishlist:excursiones' %}" class="text-decoration-none">Historial</a></li>
+            <li class="breadcrumb-item active">Detalle de Salida</li>
+        </ol>
+    </nav>
+
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card shadow">
-                <div class="card-header bg-primary text-white">
-                    <h4 class="mb-0">🥾 Detalle de Excursión</h4>
+        <div class="col-md-11">
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                
+                <div class="card-header py-5 text-center text-white" 
+                     style="background: linear-gradient(135deg, 
+                        {% if excursion.estado == 'Cumbre/Completado' %}#1b5e20 0%, #43a047 100%{% else %}#0d47a1 0%, #1976d2 100%{% endif %});">
+                    <span class="text-uppercase tracking-widest small opacity-75">Resumen de Actividad</span>
+                    <h1 class="display-5 fw-bold mb-0">
+                        {% if excursion.estado == 'Cumbre/Completado' %}🏆 {% endif %}{{ excursion.ruta.montana.nombre|upper }}
+                    </h1>
+                    <p class="lead mb-0 opacity-90">Ruta: {{ excursion.ruta.nombre }}</p>
+                    <div class="mt-3">
+                        <span class="badge rounded-pill bg-white text-dark px-4 py-2 shadow-sm">
+                            {{ excursion.get_estado_display }}
+                        </span>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h5>Ruta</h5>
-                            <p class="lead">{{ excursion.ruta.nombre }}</p>
-                            <p><strong>Montaña:</strong> {{ excursion.ruta.montana.nombre }}</p>
+
+                <div class="card-body p-4 p-lg-5">
+                    <div class="row g-4 mb-5">
+                        <div class="col-md-3">
+                            <div class="text-center p-3 border rounded-4 bg-light shadow-sm">
+                                <small class="text-muted d-block fw-bold text-uppercase" style="font-size: 0.65rem;">Modalidad</small>
+                                <span class="fw-bold text-dark">🏷️ {{ excursion.get_modalidad_display }}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="text-center p-3 border rounded-4 bg-light shadow-sm">
+                                <small class="text-muted d-block fw-bold text-uppercase" style="font-size: 0.65rem;">Inversión</small>
+                                <span class="fw-bold text-success">{{ excursion.costo_total|default:"N/A" }}</span>
+                            </div>
                         </div>
                         <div class="col-md-6">
-                            <h5>Fechas</h5>
-                            <p><strong>Inicio:</strong> {{ excursion.fecha_hora_inicio|date:"d/m/Y H:i" }}</p>
-                            <p><strong>Fin:</strong> {{ excursion.fecha_hora_fin|date:"d/m/Y H:i" }}</p>
-                        </div>
-                    </div>
-                    
-                    <div class="row mt-3">
-                        <div class="col-md-6">
-                            <h5>Proyecto</h5>
-                            <p>{% if excursion.proyecto %}{{ excursion.proyecto.nombre }}{% else %}Excursión Independiente{% endif %}</p>
-                        </div>
-                        <div class="col-md-6">
-                            <h5>Estado</h5>
-                            <span class="badge 
-                                {% if excursion.estado == 'Cumbre/Completado' %}bg-success
-                                {% elif excursion.estado == 'Intento' %}bg-info
-                                {% elif excursion.estado == 'Planificado' %}bg-warning
-                                {% else %}bg-danger{% endif %}">
-                                {{ excursion.get_estado_display }}
-                            </span>
+                            <div class="text-center p-3 border rounded-4 bg-light shadow-sm">
+                                <small class="text-muted d-block fw-bold text-uppercase" style="font-size: 0.65rem;">Cronología</small>
+                                <span class="small fw-bold text-dark">
+                                    {{ excursion.fecha_hora_inicio|date:"d M, Y H:i" }} — {{ excursion.fecha_hora_fin|date:"d M, Y H:i" }}
+                                </span>
+                            </div>
                         </div>
                     </div>
-                    
-                    <div class="mt-4">
-                        <a href="{% url 'peak_wishlist:excursiones' %}" class="btn btn-secondary">Volver</a>
-                        <a href="{% url 'peak_wishlist:excursion_update' excursion.pk %}" class="btn btn-warning ms-2">Editar</a>
-                        <a href="{% url 'peak_wishlist:excursion_delete' excursion.pk %}" class="btn btn-danger ms-2">Eliminar</a>
+
+                    <div class="row g-5">
+                        <div class="col-lg-5">
+                            {% if excursion.proyecto %}
+                            <div class="p-4 rounded-4 bg-primary bg-opacity-10 border border-primary border-opacity-25 mb-4 text-center">
+                                <h6 class="fw-bold text-primary text-uppercase small mb-1">Proyecto Relacionado</h6>
+                                <p class="mb-0 fw-bold">{{ excursion.proyecto.nombre }}</p>
+                            </div>
+                            {% endif %}
+
+                            <div class="p-4 rounded-4 border bg-white shadow-sm mb-4">
+                                <h6 class="fw-bold mb-3 text-uppercase small text-muted"><i class="bi bi-people me-2"></i>Cordada / Compañeros</h6>
+                                <div class="text-dark">
+                                    {{ excursion.companeros|linebreaks }}
+                                </div>
+                            </div>
+
+                            <div class="p-4 rounded-4 border bg-white shadow-sm">
+                                <h6 class="fw-bold mb-3 text-uppercase small text-muted"><i class="bi bi-gear me-2"></i>Equipo Utilizado</h6>
+                                <div class="small text-secondary">
+                                    {{ excursion.equipo_utilizado|linebreaks }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-7">
+                            <div class="mb-4">
+                                <h5 class="fw-bold text-dark mb-3">Condiciones del Terreno/Clima</h5>
+                                <div class="p-3 bg-light rounded-4 border-start border-4 border-warning">
+                                    <p class="mb-0 text-secondary">{{ excursion.condiciones|linebreaks }}</p>
+                                </div>
+                            </div>
+
+                            <div class="mb-5">
+                                <h5 class="fw-bold text-dark mb-3">Observaciones y Relato</h5>
+                                <div class="text-secondary fs-5 lh-base" style="text-align: justify;">
+                                    {{ excursion.observaciones|linebreaks }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-footer bg-light p-4">
+                    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+                        <a href="{% url 'peak_wishlist:excursiones' %}" class="btn btn-outline-dark rounded-pill px-4">
+                            ⬅️ Volver al Historial
+                        </a>
+                        <div class="d-flex gap-2">
+                            <a href="{% url 'peak_wishlist:excursion_update' excursion.pk %}" class="btn btn-warning rounded-pill px-4">
+                                ✏️ Editar
+                            </a>
+                            <a href="{% url 'peak_wishlist:excursion_delete' excursion.pk %}" class="btn btn-danger rounded-pill px-4">
+                                🗑️ Eliminar
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
