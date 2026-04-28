@@ -73,9 +73,78 @@ class Refugio(models.Model):
     
 #datos de ruta de montaña
 class Ruta(models.Model):
+    class DificultadEscalada(models.TextChoices):
+        # Formato: 5.X - Y - Style
+        R_56_4C_TRAD = "5.6 - 4c - Trad", "5.6 - 4c - Trad"
+        R_56_4C_SPORT = "5.6 - 4c - Sport", "5.6 - 4c - Sport"
+        R_57_5A_TRAD = "5.7 - 5a - Trad", "5.7 - 5a - Trad"
+        R_57_5A_SPORT = "5.7 - 5a - Sport", "5.7 - 5a - Sport"
+        R_58_5B_TRAD = "5.8 - 5b - Trad", "5.8 - 5b - Trad"
+        R_58_5B_SPORT = "5.8 - 5b - Sport", "5.8 - 5b - Sport"
+        R_59_5C_TRAD = "5.9 - 5c - Trad", "5.9 - 5c - Trad"
+        R_59_5C_SPORT = "5.9 - 5c - Sport", "5.9 - 5c - Sport"
+        R_510A_6A_TRAD = "5.10a - 6a - Trad", "5.10a - 6a - Trad"
+        R_510A_6A_SPORT = "5.10a - 6a - Sport", "5.10a - 6a - Sport"
+        R_510B_6A1_TRAD = "5.10b - 6a+ - Trad", "5.10b - 6a+ - Trad"
+        R_510B_6A1_SPORT = "5.10b - 6a+ - Sport", "5.10b - 6a+ - Sport"
+        R_510C_6B_TRAD = "5.10c - 6b - Trad", "5.10c - 6b - Trad"
+        R_510C_6B_SPORT = "5.10c - 6b - Sport", "5.10c - 6b - Sport"
+        R_510D_6B1_TRAD = "5.10d - 6b+ - Trad", "5.10d - 6b+ - Trad"
+        R_510D_6B1_SPORT = "5.10d - 6b+ - Sport", "5.10d - 6b+ - Sport"
+        R_511A_6C_TRAD = "5.11a - 6c - Trad", "5.11a - 6c - Trad"
+        R_511A_6C_SPORT = "5.11a - 6c - Sport", "5.11a - 6c - Sport"
+        R_511B_6C1_TRAD = "5.11b - 6c+ - Trad", "5.11b - 6c+ - Trad"
+        R_511B_6C1_SPORT = "5.11b - 6c+ - Sport", "5.11b - 6c+ - Sport"
+        R_511C_7A_TRAD = "5.11c - 7a - Trad", "5.11c - 7a - Trad"
+        R_511C_7A_SPORT = "5.11c - 7a - Sport", "5.11c - 7a - Sport"
+        R_511D_7A1_TRAD = "5.11d - 7a+ - Trad", "5.11d - 7a+ - Trad"
+        R_511D_7A1_SPORT = "5.11d - 7a+ - Sport", "5.11d - 7a+ - Sport"
+        R_512A_7B_TRAD = "5.12a - 7b - Trad", "5.12a - 7b - Trad"
+        R_512A_7B_SPORT = "5.12a - 7b - Sport", "5.12a - 7b - Sport"
+        R_512B_7B1_TRAD = "5.12b - 7b+ - Trad", "5.12b - 7b+ - Trad"
+        R_513A_8A_SPORT = "5.13a - 8a - Sport", "5.13a - 8a - Sport"
+        R_514A_8C_SPORT = "5.14a - 8c - Sport", "5.14a - 8c - Sport"
+        R_515A_9B_SPORT = "5.15a - 9b - Sport", "5.15a - 9b - Sport"
+
+    class DificultadAltaMontana(models.TextChoices):
+        F = "F, I/II, 30°", "F, I/II, 30°"
+        PD_MINUS = "PD-, II, 35°", "PD-, II, 35°"
+        PD = "PD, II+, 40°", "PD, II+, 40°"
+        PD_PLUS = "PD+, III, 45°", "PD+, III, 45°"
+        AD_MINUS = "AD-, III+, 45°", "AD-, III+, 45°"
+        AD = "AD, IV, 50°", "AD, IV, 50°"
+        AD_PLUS = "AD+, IV+, 55°", "AD+, IV+, 55°"
+        D_MINUS = "D-, V-, 60°", "D-, V-, 60°"
+        D = "D, V, 65°", "D, V, 65°"
+        D_PLUS = "D+, V+, 70°", "D+, V+, 70°"
+        TD_MINUS = "TD-, VI-, 75°", "TD-, VI-, 75°"
+        TD = "TD, VI, 80°", "TD, VI, 80°"
+        TD_PLUS = "TD+, VI+, 85°", "TD+, VI+, 85°"
+        ED1 = "ED1, VII, 90°", "ED1, VII, 90°"
+        ED2 = "ED2, VII+, 90°", "ED2, VII+, 90°"
+        ED3 = "ED3, VIII, 90°+", "ED3, VIII, 90°+"
+        ED4 = "ED4, VIII+, 90°/100°", "ED4, VIII+, 90°/100°"
+
+    class DificultadSenderismo(models.TextChoices):
+        T1 = "T1, Senderismo", "T1, Senderismo"
+        T2 = "T2, Senderismo de montaña", "T2, Senderismo de montaña"
+        T3 = "T3, Senderismo de montaña exigente", "T3, Senderismo de montaña exigente"
+        T4 = "T4, Senderismo alpino", "T4, Senderismo alpino"
+        T5 = "T5, Senderismo alpino exigente", "T5, Senderismo alpino exigente"
+        T6 = "T6, Senderismo alpino difícil", "T6, Senderismo alpino difícil"
+
+    class DificultadMTB(models.TextChoices):
+        S0 = "S0, Muy fácil", "S0, Muy fácil"
+        S1 = "S1, Fácil", "S1, Fácil"
+        S2 = "S2, Moderada", "S2, Moderada"
+        S3 = "S3, Difícil", "S3, Difícil"
+        S4 = "S4, Muy difícil", "S4, Muy difícil"
+        S5 = "S5, Extrema", "S5, Extrema"
+        
+    
     class TipoActividad(models.TextChoices):
         ALTA_MONTANA = 'Alta Montaña'
-        ESCALDA_EN_ROCA = 'Escalada'
+        ESCALADA_EN_ROCA = 'Escalada'
         TREKKING = 'Trekking'
         MTB = 'Bicicleta de Montaña'
 
@@ -86,7 +155,7 @@ class Ruta(models.Model):
         Circunvalacion = 'Circunvalacion'
 
     class ExigenciaFisica(models.TextChoices):
-        UN_DIA = 'Treking/escalada de un Dia'
+        UN_DIA_E = 'Treking/escalada de un Dia'
         DOS_DIAS = 'Trekking/escalada de Fin de Semana'
         VARIOS_DIAS = 'Varios Dias en Montaña'
         GRAN_RECORRIDO = 'Gran Recorrido'
@@ -108,7 +177,7 @@ class Ruta(models.Model):
     equipo_sugerido = models.TextField(max_length=250, null=False, blank=False)
     tiempo_estimado = models.IntegerField(null=False, blank= False)
     unidad_tiempo_estimado = models.CharField(choices=UnidadTiempo.choices, blank=False, null=False)
-    dificultad_tecnica = models.CharField(max_length=20, null=False, blank=False)
+    dificultad_tecnica = models.CharField(max_length=50, null=False, blank=False)
     observaciones = models.TextField(max_length=200, null=True, blank=True)
     indicaciones_inicio_ruta = models.TextField(max_length=200, null=True, blank=True)
 

@@ -47,6 +47,11 @@ urlpatterns = [
         ruta.RutaCreate.as_view(), 
         name="registrar_ruta"
     ),
+    path(
+        "ruta/obtener-dificultades/", 
+        ruta.obtener_dificultades, 
+        name="opciones_dificultades" 
+    ),
     path("proyectos/", proyecto.ProyectoList.as_view(), name="proyectos"),
     path("excursiones/", excursion.ExcursionList.as_view(), name="excursiones"),
     path(

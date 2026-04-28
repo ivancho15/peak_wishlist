@@ -2,11 +2,13 @@ from typing import Any
 
 from django.db.models.query import QuerySet
 from django.shortcuts import get_object_or_404
-from django.views.generic import CreateView, DetailView,ListView
+from django.views.generic import CreateView, DetailView, ListView
 from django.urls import reverse_lazy
 
 from peak_wishlist.forms import RutaForm
 from peak_wishlist.models import Montana, Ruta
+from django.shortcuts import render
+
 
 
 class RutaList(ListView):
@@ -32,7 +34,7 @@ class RutaList(ListView):
     
 
 class RutaCreate(CreateView):
-    model: Ruta
+    model= Ruta
     form_class = RutaForm
     template_name = "peak_wishlist/ruta_form.html" 
 
@@ -50,3 +52,15 @@ class RutaCreate(CreateView):
         context['titulo_dinamico'] = f"🥾 Registrar Ruta protegida en {montana.nombre}"
         context['url_cancelar'] = reverse_lazy('peak_wishlist:rutas_por_montana', kwargs={'montana_id': self.kwargs.get('montana_id')})
         return context
+    
+def obtener_dificultades(request):
+    actividad = request.GET.get('actividad')
+    mapeo = {
+        Ruta.TipoActividad.ALTA_MONTANA: Ruta.DificultadAltaMontana.choices,
+        Ruta.TipoActividad.TREKKING: Ruta.DificultadSenderismo.choices,
+        Ruta.TipoActividad.ESCALADA_EN_ROCA: Ruta.DificultadEscalada.choices,
+        Ruta.TipoActividad.MTB : Ruta.DificultadMTB.choices
+        }
+    opciones = mapeo.get(actividad, [])
+
+    return render(request, 'peak_wishlist/componentes/dificultad_opciones.html', {'opciones': opciones})

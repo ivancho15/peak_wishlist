@@ -1,5 +1,6 @@
 from django import forms
 from peak_wishlist.models import Montana, Excursion, Refugio, Ruta, Parque, Proyecto
+from django.urls import reverse_lazy
 
 class MontanaForm(forms.ModelForm):
     class Meta:
@@ -48,9 +49,20 @@ class RutaForm(forms.ModelForm):
     class Meta:
         model = Ruta
         exclude = ['montana'] 
+        widgets = {
+            'dificultad_tecnica': forms.Select(),
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+        if 'actividad' in self.fields:
+            self.fields['actividad'].widget.attrs.update({
+                'hx-get': reverse_lazy('peak_wishlist:opciones_dificultades'),
+                'hx-target': '#id_dificultad_tecnica', 
+                'hx-trigger': 'change',
+            })
+
         for name, field in self.fields.items():
             if isinstance(field.widget, forms.Textarea):
                 field.widget.attrs.update({'class': 'form-control rounded-4', 'rows': '3'})
