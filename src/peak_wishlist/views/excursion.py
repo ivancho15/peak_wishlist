@@ -1,5 +1,6 @@
 from typing import Any
 
+from django.db.models import Q
 from django.db.models.query import QuerySet
 from django.shortcuts import get_object_or_404
 from django.views.generic import (
@@ -10,7 +11,7 @@ from django.views.generic import (
     UpdateView,
 )
 
-from peak_wishlist.models import Excursion, Proyecto, Ruta, Montana
+from peak_wishlist.models import Excursion, Montana, Proyecto, Ruta
 
 
 class ExcursionList(ListView):
@@ -25,22 +26,32 @@ class ExcursionList(ListView):
 
         if ruta_id:
             self.filtro = get_object_or_404(Ruta, id=ruta_id)
-            return Excursion.objects.filter(ruta=self.filtro).order_by(
+            queryset = Excursion.objects.filter(ruta=self.filtro).order_by(
                 "-fecha_hora_inicio"
             )
         elif montana_id:
             self.filtro = get_object_or_404(Montana, id=montana_id)
-            return Excursion.objects.filter(ruta__montana=self.filtro).order_by(
+            queryset = Excursion.objects.filter(ruta__montana=self.filtro).order_by(
                 "-fecha_hora_inicio"
             )
         elif proyecto_id:
             self.filtro = get_object_or_404(Proyecto, id=proyecto_id)
-            return Excursion.objects.filter(proyecto=self.filtro).order_by(
+            queryset = Excursion.objects.filter(proyecto=self.filtro).order_by(
                 "-fecha_hora_inicio"
             )
+        else:
+            self.filtro = None
+            queryset = Excursion.objects.all().order_by("-fecha_hora_inicio")
 
-        self.filtro = None
-        return Excursion.objects.all().order_by("-fecha_hora_inicio")
+        query = self.request.GET.get("q")
+        if query:
+            queryset = queryset.filter(
+                Q(ruta__nombre__icontains=query) | Q(proyecto__nombre__icontains=query) 
+                | Q(ruta__montana__nombre__icontains=query)
+            )
+
+        return queryset
+        
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)

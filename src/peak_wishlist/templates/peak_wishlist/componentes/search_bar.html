@@ -1,0 +1,20 @@
+<form method="GET" class="mb-4">
+    <div class="input-group">
+        <input type="text" 
+               name="q" 
+               class="form-control rounded-pill-start ps-4" 
+               placeholder="Buscar por nombre, cordillera o detalles..." 
+               value="{{ request.GET.q }}">
+        <button class="btn btn-primary rounded-pill-end px-4" type="submit">
+            🔍 Buscar
+        </button>
+        {% if request.GET.q %}
+            <a href="{{ request.path }}" class="btn btn-outline-secondary ms-2 rounded-pill">Limpiar</a>
+        {% endif %}
+    </div>
+</form>
+
+<style>
+    .rounded-pill-start { border-radius: 50px 0 0 50px !important; }
+    .rounded-pill-end { border-radius: 0 50px 50px 0 !important; }
+</style>
