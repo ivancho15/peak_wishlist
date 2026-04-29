@@ -119,6 +119,9 @@ class ExcursionUpdate(UpdateView):
         if r_id: return reverse_lazy("peak_wishlist:ruta_detail", kwargs={"pk": r_id})
         if m_id: return reverse_lazy("peak_wishlist:montana_detail", kwargs={"pk": m_id})
         
+        if self.object: #type: ignore 
+            return reverse_lazy("peak_wishlist:excursion_detail", kwargs={"pk": self.object.pk}) #type: ignore
+
         return reverse_lazy("peak_wishlist:excursiones")
     
     def get_context_data(self, **kwargs):

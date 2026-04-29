@@ -130,7 +130,8 @@ class ExursionForm(forms.ModelForm):
                 self.fields['fecha_hora_fin'].initial = self.instance.fecha_hora_fin.strftime('%Y-%m-%dT%H:%M')
             
             self.fields['proyecto'].disabled = True
-            self.fields['proyecto'].queryset = Proyecto.objects.filter(id=self.instance.proyecto.id) #type: ignore
+            if self.instance.proyecto:
+                self.fields['proyecto'].queryset = Proyecto.objects.filter(id=self.instance.proyecto.id) #type: ignore
             
             self.fields['ruta'].disabled = True
             self.fields['ruta'].queryset = Ruta.objects.filter(id=self.instance.ruta.id) #type: ignore
