@@ -43,10 +43,12 @@ class MontanaList(ListView):
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
 
+        # comportamiento cuando se invoca el listado desde Pais    
         if isinstance(self.filtro, Pais):
             context["extension_titulo"] = f"en {self.filtro.nombre}"
             context["url_volver"] = reverse_lazy("peak_wishlist:paises")
             context["volver_label"] = "Volver a Países"
+        # comportamiento cuando se invoca el listado desde Parque    
         elif isinstance(self.filtro, Parque):
             parque = self.filtro
             context["extension_titulo"] = f"en {parque.nombre} ({parque.pais})"
@@ -55,6 +57,7 @@ class MontanaList(ListView):
                 kwargs={"pais_id": getattr(parque.pais, "pk", None)},
             )
             context["volver_label"] = "Volver a Parques"
+        # comportamiento Listado General
         else:
             context["extension_titulo"] = ""
             context["url_volver"] = reverse_lazy("peak_wishlist:index")

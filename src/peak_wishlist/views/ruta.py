@@ -46,7 +46,6 @@ class RutaList(ListView):
             context["volver_label"] = "Volver al inicio"
         return context
 
-
 class RutaCreate(CreateView):
     model = Ruta
     form_class = RutaForm
@@ -66,7 +65,7 @@ class RutaCreate(CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         montana = get_object_or_404(Montana, id=self.kwargs.get("montana_id"))
-        context["titulo_dinamico"] = f"🥾 Registrar Ruta protegida en {montana.nombre}"
+        context["titulo_dinamico"] = f"🥾 Registrar Ruta en {montana.nombre}"
         context["url_cancelar"] = reverse_lazy(
             "peak_wishlist:rutas_por_montana",
             kwargs={"montana_id": self.kwargs.get("montana_id")},
@@ -80,7 +79,7 @@ class RutaDetail(DetailView):
     context_object_name = "ruta"
 
 
-
+# Obtener dificultades segun actividad
 def obtener_dificultades(request):
     actividad = request.GET.get("actividad")
     mapeo = {
@@ -91,8 +90,5 @@ def obtener_dificultades(request):
     }
     opciones = mapeo.get(actividad, [])
 
-    return render(
-        request,
-        "peak_wishlist/componentes/dificultad_opciones.html",
-        {"opciones": opciones},
+    return render(request,"peak_wishlist/componentes/dificultad_opciones.html",{"opciones": opciones},
     )

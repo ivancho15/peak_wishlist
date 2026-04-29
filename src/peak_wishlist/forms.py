@@ -12,7 +12,7 @@ class MontanaForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         
-        #da estilos a los fields del formulari
+        #da estilos a los fields del formulario
         dar_estilo(self, self.fields)
 
     def clean(self):
@@ -60,7 +60,7 @@ class RutaForm(forms.ModelForm):
             else:
                 field.widget.attrs.update({'class': 'form-control rounded-pill'})
 
-        #Filtra el dropdown de dificultat tecnica segun la actividad
+        #Filtra el dropdown de dificultad tecnica segun la actividad
         if 'actividad' in self.fields:
             self.fields['actividad'].widget.attrs.update({
                 'hx-get': reverse_lazy('peak_wishlist:opciones_dificultades'),
@@ -147,7 +147,7 @@ class ExursionForm(forms.ModelForm):
         self.fields['proyecto'].queryset = Proyecto.objects.exclude(estado='Cumbre/Completado') #type: ignore
  
         """
-        Deshabilita la edicion de proyecto y ruta, esto
+        Deshabilita la edicion de proyecto y ruta
         pobla los campos de fecha
         """
         if self.instance.pk:
@@ -197,7 +197,6 @@ class ExursionForm(forms.ModelForm):
                 # Ordenado por montaña 
                 self.fields['ruta'].queryset = Ruta.objects.all().order_by('montana__nombre', 'nombre')  #type: ignore
 
-
     def clean(self):
         cleaned_data = super().clean()
         fecha_inicio = cleaned_data.get("fecha_hora_inicio")
@@ -210,7 +209,7 @@ class ExursionForm(forms.ModelForm):
             })
         return cleaned_data
     
-
+# funcion para dar estilos
 def dar_estilo(self, fields: dict):
         
     for name, field in self.fields.items():

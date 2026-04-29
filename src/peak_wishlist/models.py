@@ -74,6 +74,7 @@ class Refugio(models.Model):
     
 #datos de ruta de montaña
 class Ruta(models.Model):
+    # Dificultad tecnica: Escalada
     class DificultadEscalada(models.TextChoices):
         # Formato: 5.X - Y - Style
         R_56_4C_TRAD = "5.6 - 4c - Trad", "5.6 - 4c - Trad"
@@ -107,6 +108,7 @@ class Ruta(models.Model):
         R_514A_8C_SPORT = "5.14a - 8c - Sport", "5.14a - 8c - Sport"
         R_515A_9B_SPORT = "5.15a - 9b - Sport", "5.15a - 9b - Sport"
 
+    # Dificultad tecnica: Alta Montaña
     class DificultadAltaMontana(models.TextChoices):
         F = "F, I/II, 30°", "F, I/II, 30°"
         PD_MINUS = "PD-, II, 35°", "PD-, II, 35°"
@@ -126,6 +128,7 @@ class Ruta(models.Model):
         ED3 = "ED3, VIII, 90°+", "ED3, VIII, 90°+"
         ED4 = "ED4, VIII+, 90°/100°", "ED4, VIII+, 90°/100°"
 
+    # Dificultad tecnica: Senderismo
     class DificultadSenderismo(models.TextChoices):
         T1 = "T1, Senderismo", "T1, Senderismo"
         T2 = "T2, Senderismo de montaña", "T2, Senderismo de montaña"
@@ -134,6 +137,7 @@ class Ruta(models.Model):
         T5 = "T5, Senderismo alpino exigente", "T5, Senderismo alpino exigente"
         T6 = "T6, Senderismo alpino difícil", "T6, Senderismo alpino difícil"
 
+    # Dificultad tecnica: MTB
     class DificultadMTB(models.TextChoices):
         S0 = "S0, Muy fácil", "S0, Muy fácil"
         S1 = "S1, Fácil", "S1, Fácil"
@@ -142,19 +146,21 @@ class Ruta(models.Model):
         S4 = "S4, Muy difícil", "S4, Muy difícil"
         S5 = "S5, Extrema", "S5, Extrema"
         
-    
+    # Tipo de actividad
     class TipoActividad(models.TextChoices):
         ALTA_MONTANA = 'Alta Montaña'
         ESCALADA_EN_ROCA = 'Escalada'
         TREKKING = 'Trekking'
         MTB = 'Bicicleta de Montaña'
 
+    # tipo de trayecto
     class TipoTrayecto(models.TextChoices):
         IDA_Y_VUELTA = 'Ida y vuelta'
         Circuito = 'Circuito'
         Travesia = 'Travesia'
         Circunvalacion = 'Circunvalacion'
-
+    
+    # Opciones de Exigencia fisica
     class ExigenciaFisica(models.TextChoices):
         UN_DIA_E = 'Treking/escalada de un Dia'
         DOS_DIAS = 'Trekking/escalada de Fin de Semana'
@@ -162,6 +168,7 @@ class Ruta(models.Model):
         GRAN_RECORRIDO = 'Gran Recorrido'
         RECORRIDO_LOCAL = 'Recorrido Local'
 
+    # Opcione unidad de tiempo de actividad
     class UnidadTiempo(models.TextChoices):
         DIAS = 'Dias'
         HORAS = 'Horas'
