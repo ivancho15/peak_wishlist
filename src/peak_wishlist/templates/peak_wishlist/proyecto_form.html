@@ -1,0 +1,18 @@
+{% extends 'peak_wishlist/base.html' %}
+
+{% block title %}
+    {% if form.instance.pk %}Editar{% else %}Registrar{% endif %} Excursión
+{% endblock title %}
+
+{% block contenido %}
+
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        {% if form.instance.pk %}
+            {% include 'peak_wishlist/componentes/form_card.html' with card_title="📝 Actualizar Proyecto" button_text="Actualizar" cancel_url=url_cancelar %}
+        {% else %}
+            {% include 'peak_wishlist/componentes/form_card.html' with card_title="📆 Registrar Proyecto" button_text="Registrar" cancel_url=url_cancelar %}
+        {% endif %}
+    </div>
+</div>
+{% endblock contenido %}

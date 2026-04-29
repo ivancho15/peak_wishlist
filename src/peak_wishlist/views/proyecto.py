@@ -11,6 +11,8 @@ from django.views.generic import (
 )
 
 from peak_wishlist.models import Proyecto
+from peak_wishlist.forms import ProyectoForm
+from django.urls import reverse_lazy
 
 
 class ProyectoList(ListView):
@@ -27,7 +29,6 @@ class ProyectoList(ListView):
 
         return queryset
 
-
 class ProyectoDetail(DetailView):
     model = Proyecto
     template_name = "peak_wishlist/proyecto_detail.html"
@@ -37,11 +38,28 @@ class ProyectoDetail(DetailView):
 class ProyectoUpdate(UpdateView):
     model = Proyecto
     template_name = "peak_wishlist/proyecto_form.html"
-    fields = "__all__"
+    form_class = ProyectoForm
     success_url = "/proyectos/"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["url_cancelar"] = reverse_lazy("peak_wishlist:proyectos")
+        return context
 
 
 class ProyectoDelete(DeleteView):
     model = Proyecto
     template_name = "peak_wishlist/proyecto_confirm_delete.html"
     success_url = "/proyectos/"
+
+
+class ProyectoCrate(CreateView):
+    model = Proyecto
+    template_name = "peak_wishlist/proyecto_form.html"
+    form_class = ProyectoForm
+    success_url = "/proyectos/"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["url_cancelar"] = reverse_lazy("peak_wishlist:proyectos")
+        return context

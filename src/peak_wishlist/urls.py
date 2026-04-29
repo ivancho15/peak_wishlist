@@ -57,6 +57,7 @@ urlpatterns = [
         name="opciones_dificultades" 
     ),
     path("proyectos/", proyecto.ProyectoList.as_view(), name="proyectos"),
+    path("proyecto/create/", proyecto.ProyectoCrate.as_view(), name="registrar_proyecto"),
     path("proyecto/<int:pk>/", proyecto.ProyectoDetail.as_view(), name="proyecto_detail"),
     path("proyecto/<int:pk>/update/", proyecto.ProyectoUpdate.as_view(), name="proyecto_update"),
     path("proyecto/<int:pk>/delete/", proyecto.ProyectoDelete.as_view(), name="proyecto_delete"),
