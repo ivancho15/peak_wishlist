@@ -1,6 +1,7 @@
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 from djmoney.models.fields import MoneyField
+from django.contrib.auth.models import User
 
 #modelo pais, define el pais donde se ubica la montaña o ruta
 class Pais(models.Model):
@@ -194,6 +195,7 @@ class Proyecto(models.Model):
         
     nombre = models.CharField(max_length=250, null=False, blank=False)
     pais_destino = models.ForeignKey(Pais, on_delete=models.PROTECT, null=False, blank=False)
+    usuario = models.ForeignKey(User,  on_delete=models.CASCADE, null = False)
     fecha_inicio = models.DateField(null=False, blank=False)
     fecha_fin = models.DateField(null=False, blank=False)
     presupuesto_general = MoneyField(max_digits=8, decimal_places=0, null=False, blank=False)
@@ -226,6 +228,7 @@ class Excursion(models.Model):
     estado = models.CharField(choices=Estado.choices, max_length=20, null=False, blank=True)
     ruta = models.ForeignKey(Ruta, on_delete=models.PROTECT, null=False, blank=False, related_name='salidas')
     proyecto = models.ForeignKey(Proyecto, on_delete=models.CASCADE, null=True, blank=True, related_name='actividades')
+    usuario = models.ForeignKey(User,  on_delete=models.CASCADE, null = False)
     
 
     def __str__(self) -> str:
