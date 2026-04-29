@@ -14,6 +14,7 @@ class MontanaList(ListView):
     model = Montana
     template_name = "peak_wishlist/montanas.html"
     context_object_name = "montanas"
+    paginate_by = 10
 
     def get_queryset(self) -> QuerySet[Any]:
         pais_id = self.kwargs.get("pais_id")
@@ -32,7 +33,9 @@ class MontanaList(ListView):
         query = self.request.GET.get("q")
         if query:
             queryset = queryset.filter(
-                Q(nombre__icontains=query) | Q(cordillera__icontains=query) | Q(pais__nombre__icontains=query)
+                Q(nombre__icontains=query)
+                | Q(cordillera__icontains=query)
+                | Q(pais__nombre__icontains=query)
             )
 
         return queryset
@@ -42,12 +45,20 @@ class MontanaList(ListView):
 
         if isinstance(self.filtro, Pais):
             context["extension_titulo"] = f"en {self.filtro.nombre}"
+            context["url_volver"] = reverse_lazy("peak_wishlist:paises")
+            context["volver_label"] = "Volver a Países"
         elif isinstance(self.filtro, Parque):
-            context["extension_titulo"] = (
-                f"en {self.filtro.nombre} ({self.filtro.pais})"
+            parque = self.filtro
+            context["extension_titulo"] = f"en {parque.nombre} ({parque.pais})"
+            context["url_volver"] = reverse_lazy(
+                "peak_wishlist:parques_por_pais",
+                kwargs={"pais_id": getattr(parque.pais, "pk", None)},
             )
+            context["volver_label"] = "Volver a Parques"
         else:
             context["extension_titulo"] = ""
+            context["url_volver"] = reverse_lazy("peak_wishlist:index")
+            context["volver_label"] = "Volver al inicio"
         return context
 
 

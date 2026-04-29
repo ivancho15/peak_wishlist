@@ -14,6 +14,7 @@ class ParqueList(ListView):
     model = Parque
     template_name = "peak_wishlist/parques.html"
     context_object_name = "parques"
+    paginate_by = 10
 
     def get_queryset(self) -> QuerySet[Any]:
         self.pais = get_object_or_404(Pais, id=self.kwargs["pais_id"])
@@ -28,6 +29,8 @@ class ParqueList(ListView):
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context["extension_titulo"] = f"en {self.pais.nombre}"
+        context["url_volver"] = reverse_lazy("peak_wishlist:paises")
+        context["volver_label"] = "Volver a Países"
         return context
 
 

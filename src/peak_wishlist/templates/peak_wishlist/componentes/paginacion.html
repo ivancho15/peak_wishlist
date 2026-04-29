@@ -1,0 +1,30 @@
+{% if is_paginated %}
+<nav aria-label="Paginación" class="mt-4">
+    <ul class="pagination justify-content-center flex-wrap">
+        <li class="page-item {% if not page_obj.has_previous %}disabled{% endif %}">
+            {% if page_obj.has_previous %}
+                <a class="page-link rounded-pill px-4" href="?{% if request.GET.q %}q={{ request.GET.q }}&{% endif %}page={{ page_obj.previous_page_number }}" aria-label="Anterior">
+                    « Anterior
+                </a>
+            {% else %}
+                <span class="page-link rounded-pill px-4">« Anterior</span>
+            {% endif %}
+        </li>     
+        {% for num in page_obj.paginator.page_range %}
+            <li class="page-item {% if num == page_obj.number %}active{% endif %}">
+                <a class="page-link" href="?{% if request.GET.q %}q={{ request.GET.q }}&{% endif %}page={{ num }}">{{ num }}</a>
+            </li>
+        {% endfor %}
+
+        <li class="page-item {% if not page_obj.has_next %}disabled{% endif %}">
+            {% if page_obj.has_next %}
+                <a class="page-link rounded-pill px-4" href="?{% if request.GET.q %}q={{ request.GET.q }}&{% endif %}page={{ page_obj.next_page_number }}" aria-label="Siguiente">
+                    Siguiente »
+                </a>
+            {% else %}
+                <span class="page-link rounded-pill px-4">Siguiente »</span>
+            {% endif %}
+        </li>
+    </ul>
+</nav>
+{% endif %}

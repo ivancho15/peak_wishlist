@@ -11,11 +11,15 @@
     <hr class="my-4 mx-auto" style="width: 100px; border-top: 3px solid #2c3e50;">
 </div>
 
-<h2 class="mb-4 text-dark fw-bold">🏞️Listado de Parques Nacionales y Areas Protegidas  {{ extension_titulo }}</h2>
-
-<a href="{% url 'peak_wishlist:registrar_parque' pais_id=view.pais.id %}" class="btn btn-dark rounded-pill shadow-sm">
+<div class="d-flex flex-column flex-md-row align-items-start justify-content-between gap-3 mb-4">
+    <a href="{{ url_volver }}" class="btn btn-outline-dark rounded-pill px-4">
+        ← {{ volver_label }}
+    </a>
+    <a href="{% url 'peak_wishlist:registrar_parque' pais_id=view.pais.id %}" class="btn btn-dark rounded-pill shadow-sm">
         ➕ Registrar Parque
-</a>
+    </a>
+</div>
+<h2 class="mb-4 text-dark fw-bold">🏞️Listado de Parques Nacionales y Areas Protegidas  {{ extension_titulo }}</h2>
 
 {% include 'peak_wishlist/componentes/search_bar.html' %}
 <div class="table-container-custom table-responsive">
@@ -70,5 +74,6 @@
         </tbody>
     </table>
 </div>
+{% include 'peak_wishlist/componentes/paginacion.html' %}
 
 {% endblock contenido %}

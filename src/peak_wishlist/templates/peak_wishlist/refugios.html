@@ -12,14 +12,17 @@
 </div>
 
 
-<h2 class="mb-4 text-dark fw-bold"> 🛖 Refugios en {{ extension_titulo }}</h2>
-
-<div class="mb-4">
+<div class="d-flex flex-column flex-md-row align-items-start justify-content-between gap-3 mb-4">
+    <a href="{{ url_volver }}" class="btn btn-outline-dark rounded-pill px-4">
+        ← {{ volver_label }}
+    </a>
     <a href="{% url 'peak_wishlist:registrar_refugio' montana_id=view.kwargs.montana_id %}" 
        class="btn btn-dark rounded-pill shadow-sm">
         ➕ Registrar otro Refugio
     </a>
 </div>
+
+<h2 class="mb-4 text-dark fw-bold"> 🛖 Refugios en {{ extension_titulo }}</h2>
 
 {% include 'peak_wishlist/componentes/search_bar.html' %}
 <div class="table-container-custom table-responsive">
@@ -60,6 +63,7 @@
         </tbody>
     </table>
 </div>
+{% include 'peak_wishlist/componentes/paginacion.html' %}
 
 
 {% endblock contenido %}

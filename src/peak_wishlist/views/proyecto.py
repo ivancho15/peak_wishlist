@@ -18,6 +18,7 @@ class ProyectoList(ListView):
     model = Proyecto
     template_name = "peak_wishlist/proyectos.html"
     context_object_name = "proyectos"
+    paginate_by = 10
 
     def get_queryset(self) -> QuerySet[Any]:
         queryset = Proyecto.objects.all().order_by("-fecha_inicio")
@@ -27,6 +28,12 @@ class ProyectoList(ListView):
             queryset = queryset.filter(Q(nombre__icontains=query) | Q(pais_destino__nombre__icontains=query))
 
         return queryset
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["url_volver"] = reverse_lazy("peak_wishlist:index")
+        context["volver_label"] = "Volver al inicio"
+        return context
 
 class ProyectoDetail(DetailView):
     model = Proyecto

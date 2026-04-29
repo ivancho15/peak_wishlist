@@ -14,6 +14,7 @@ class RefugioList(ListView):
     model = Refugio
     template_name = "peak_wishlist/refugios.html"
     context_object_name = "refugios"
+    paginate_by = 10
 
     def get_queryset(self) -> QuerySet[Any]:
         montana_id = self.kwargs.get("montana_id")
@@ -34,8 +35,15 @@ class RefugioList(ListView):
         context = super().get_context_data(**kwargs)
         if self.montana:
             context["extension_titulo"] = f"en {self.montana.nombre}"
+            context["url_volver"] = reverse_lazy(
+                "peak_wishlist:montana_detail",
+                kwargs={"pk": self.montana.pk},
+            )
+            context["volver_label"] = f"Volver a {self.montana.nombre}"
         else:
             context["extension_titulo"] = ""
+            context["url_volver"] = reverse_lazy("peak_wishlist:index")
+            context["volver_label"] = "Volver al inicio"
         return context
 
 
@@ -74,4 +82,3 @@ class RefugioDetail(DetailView):
     model = Refugio
     template_name = "peak_wishlist/refugio_detail.html"
     context_object_name = "refugio"
-
