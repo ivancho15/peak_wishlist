@@ -35,7 +35,10 @@
             <tr>
                 <td class="fw-bold text-primary">
                     <div class="fw-bold text-primary">{{ montana.nombre }}</div>
-                    <div class="text-muted small" style="font-size: 0.7rem;">{{ montana.cordillera }}</div>
+                    <div class="text-muted small" style="font-size: 0.7rem;">{% if montana.cordillera %}
+                        {{ montana.cordillera }}
+                        {% endif %}
+                    </div>
                 </td>
                 <td>
                     <small class="text-muted">{{ montana.altitud }} msnm</small>
