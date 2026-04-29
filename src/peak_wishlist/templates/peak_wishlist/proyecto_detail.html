@@ -96,7 +96,7 @@
                             </div>
                             {% if  proyecto.get_estado_display != 'Completado' %}
                                 <div class="mt-4">
-                                    <a href="#" class="btn btn-outline-primary w-100 rounded-pill">
+                                    <a href="{% url 'peak_wishlist:registrar_excursion' %}?p_id={{ proyecto.id }}" class="btn btn-outline-primary w-100 rounded-pill">
                                         ➕ Vincular nueva excursión
                                     </a>
                                 </div>

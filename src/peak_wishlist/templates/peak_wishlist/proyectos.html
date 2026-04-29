@@ -21,7 +21,6 @@
                 <th>Proyecto</th>
                 <th>Inicio</th>
                 <th>Fin</th>
-                <th class="text-center">Excusiones</th>
                 <th class="text-center">Estado</th>
                 <th class="text-center">Acción</th>
             </tr>
@@ -42,9 +41,6 @@
                     <span class="badge bg-light text-dark border">
                         {{ proyecto.fecha_fin|date:"d \d\e M \d\e Y" }}
                     </span>
-                </td>
-                <td class="text-center">
-                    <a href="{% url 'peak_wishlist:excursiones_por_proyecto' proyecto.id %}" class="btn btn-sm btn-outline-dark rounded-pill">Ver lista</a>
                 </td>
                 <td>
                     <span class="badge {% if proyecto.estado == 'Cumbre/Completado' %}bg-success{% else %}bg-warning text-dark{% endif %} border">

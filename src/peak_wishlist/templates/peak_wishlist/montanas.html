@@ -22,8 +22,6 @@
                 <th style="width: 12%" class="text-center">Acceso</th>
                 <th style="width: 15%">Países</th>
                 <th style="width: 10%" class="text-center">Refugios</th>
-                <th style="width: 10%" class="text-center">Rutas</th>
-                <th style="width: 10%" class="text-center">Excursiones</th>
                 <th style="width: 10%" class="text-center">Acción</th>
             </tr>
         </thead>
@@ -64,14 +62,6 @@
                         <span class="me-1">➕</span> Registrar
                         </a>
                     {% endif %}
-                </td>
-                <td class="text-center">
-                    <a href="{% url 'peak_wishlist:rutas_por_montana' montana.id %}" 
-                       class="btn btn-sm btn-outline-dark rounded-pill py-0 px-2" style="font-size: 0.8rem;">Ver lista</a>
-                </td>
-                <td class="text-center">
-                    <a href="{% url 'peak_wishlist:excursiones_por_montana' montana.id %}" class="btn btn-sm btn-outline-dark rounded-pill py-0 px-2" 
-                       style="font-size: 0.8rem;">Ver lista</a>
                 </td>
                 <td class="text-center">
                     <a href="{% url 'peak_wishlist:montana_detail' montana.pk %}" 

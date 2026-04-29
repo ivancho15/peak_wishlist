@@ -11,8 +11,10 @@
 </div>
 
 <h2 class="mb-4 text-dark fw-bold">🥾🚵‍♂️🧗Listado de Excusiones {{ extension_titulo }}</h2>
-<a href="#" class="btn btn-dark rounded-pill shadow-sm">
-        ➕ Registrar nueva excursion
+<a href="{% url 'peak_wishlist:registrar_excursion' %}{% if view.kwargs.montana_id %}?m_id={{ view.kwargs.montana_id }}
+   {% elif view.kwargs.proyecto_id %}?p_id={{ view.kwargs.proyecto_id }}{% elif view.kwargs.ruta_id %}?r_id={{ view.kwargs.ruta_id }}{% endif %}" 
+   class="btn btn-dark rounded-pill shadow-sm">
+        ➕ Registrar nueva excursión
 </a>
 {% include 'peak_wishlist/componentes/search_bar.html' %}
 <div class="table-container-custom table-responsive">
@@ -81,9 +83,8 @@
                            style="font-size: 0.75rem; font-weight: 600;">
                             🔍 Detalles
                         </a>
-                        <a href="{% url 'peak_wishlist:excursion_update' excursion.pk %}" 
-                           class="btn btn-sm btn-warning rounded-pill shadow-sm px-3 ms-1" 
-                           style="font-size: 0.75rem; font-weight: 600;">
+                        <a href="{% url 'peak_wishlist:excursion_update' excursion.pk %}?{% if view.kwargs.montana_id %}m_id={{ view.kwargs.montana_id }}{% elif view.kwargs.proyecto_id %}p_id={{ view.kwargs.proyecto_id }}{% elif view.kwargs.ruta_id %}r_id={{ view.kwargs.ruta_id }}{% endif %}" 
+                        class="btn btn-sm btn-warning rounded-pill shadow-sm px-3">
                             ✏️ Editar
                         </a>
                         <a href="{% url 'peak_wishlist:excursion_delete' excursion.pk %}" 

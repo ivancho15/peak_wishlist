@@ -30,7 +30,6 @@
                 <th>Actividad</th>
                 <th>Exigencia</th>
                 <th>Dificultad</th>
-                <th class="text-center">Excusiones</th>
                 <th class="text-center">Acción</th>
             </tr>
         </thead>
@@ -57,9 +56,6 @@
                     <span class="badge bg-light text-dark border">
                         {{ ruta.dificultad_tecnica }}
                     </span>
-                </td>
-                <td class="text-center">
-                    <a href="{% url 'peak_wishlist:excursiones_por_ruta' ruta.id %}" class="btn btn-sm btn-outline-dark rounded-pill">Ver lista</a>
                 </td>
                 <td class="text-center">
                     <a href="{% url 'peak_wishlist:ruta_detail' ruta.pk %}" 

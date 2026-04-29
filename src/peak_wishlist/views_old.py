@@ -4,11 +4,9 @@ from peak_wishlist import models
 def index(request):
     return render(request, 'peak_wishlist/index.html')
 
-
 def paises(request):
     query = models.Pais.objects.all().order_by('nombre')
     return render(request, "peak_wishlist/paises.html", {'paises': query})
-
 
 def  parques(request, pais_id=None):
     pais = models.Pais.objects.get(id=pais_id)

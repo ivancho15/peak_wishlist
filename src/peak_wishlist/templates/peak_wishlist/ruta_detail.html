@@ -111,14 +111,16 @@
                 <div class="card-footer bg-light p-4">
                     <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
                         <div class="text-muted small">
-                            <strong>{{ ruta.excursion_set.count }}</strong> excursiones registradas en esta ruta.
+                            <a href="{% url 'peak_wishlist:excursiones_por_ruta' ruta.id %}" class="text-decoration-none fw-bold text-primary">
+                                🔍 Ver {{ ruta.excursion_set.count }} excursiones registradas
+                            </a>
                         </div>
                         <div class="d-flex gap-2">
                             <a href="{% url 'peak_wishlist:montana_detail' ruta.montana.id %}" class="btn btn-outline-dark rounded-pill px-4">
                                 Volver a {{ ruta.montana.nombre }}
                             </a>
-                            <a href="#" class="btn btn-dark rounded-pill px-4">
-                                Registrar Cumbre
+                            <a href="{% url 'peak_wishlist:registrar_excursion' %}?r_id={{ ruta.id }}" class="btn btn-outline-primary rounded-pill px-4 fw-bold">  
+                                ➕ Registrar Excursión
                             </a>
                         </div>
                     </div>

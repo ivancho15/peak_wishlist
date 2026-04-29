@@ -61,6 +61,7 @@ urlpatterns = [
     path("proyecto/<int:pk>/update/", proyecto.ProyectoUpdate.as_view(), name="proyecto_update"),
     path("proyecto/<int:pk>/delete/", proyecto.ProyectoDelete.as_view(), name="proyecto_delete"),
     path("excursiones/", excursion.ExcursionList.as_view(), name="excursiones"),
+    path("excursiones/create/", excursion.ExcursionCreate.as_view(), name="registrar_excursion"),
     path("excursion/<int:pk>/", excursion.ExcursionDetail.as_view(), name="excursion_detail"),
     path("excursion/<int:pk>/update/", excursion.ExcursionUpdate.as_view(), name="excursion_update"),
     path("excursion/<int:pk>/delete/", excursion.ExcursionDelete.as_view(), name="excursion_delete"),
