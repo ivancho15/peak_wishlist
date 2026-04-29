@@ -89,8 +89,14 @@ class ProyectoForm(forms.ModelForm):
         model = Proyecto
         fields = "__all__"
         widgets = {
-            'fecha_inicio': forms.DateInput(attrs={'type': 'date'}),
-            'fecha_fin': forms.DateInput(attrs={'type': 'date'}),
+                'fecha_inicio': forms.DateInput(
+                        attrs={'type': 'date', 'class': 'form-control rounded-pill'},
+                        format='%Y-%m-%d'
+                    ),
+                'fecha_fin': forms.DateInput(
+                        attrs={'type': 'date', 'class': 'form-control rounded-pill'},
+                        format='%Y-%m-%d'
+                    ),
         }
 
     def __init__(self, *args, **kwargs):
@@ -98,6 +104,13 @@ class ProyectoForm(forms.ModelForm):
         
         #da estilos a los fields del formulario
         dar_estilo(self, self.fields)
+
+        if self.instance.pk:
+            if self.instance.fecha_inicio:
+                self.fields['fecha_inicio'].initial = self.instance.fecha_inicio.strftime('%Y-%m-%d')
+            if self.instance.fecha_fin:
+                self.fields['fecha_fin'].initial = self.instance.fecha_fin.strftime('%Y-%m-%d')
+
 
 #formualrio excursion 
 class ExursionForm(forms.ModelForm):
