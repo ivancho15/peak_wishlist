@@ -244,3 +244,12 @@ class Excursion(models.Model):
     class Meta:
         verbose_name="Excursion"
         verbose_name_plural="Excursiones"
+
+
+# modelo de avatar
+class Avatar(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='avatar')
+    imagen = models.ImageField(upload_to='avatares', null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.imagen}"

@@ -6,6 +6,25 @@
         <div class="col-md-5">
             <div class="card shadow-lg border-0 rounded-4">
                 <div class="card-body p-5">
+                    <div class="text-center mb-4">
+                        
+                        {% if user.avatar.imagen %}
+                            <img src="{{ user.avatar.imagen.url }}" class="rounded-circle shadow-sm" style="width: 100px; height: 100px; object-fit: cover;">
+                        {% else %}
+                            <div class="bg-secondary text-white rounded-circle d-inline-flex align-items-center justify-content-center shadow-sm" style="width: 100px; height: 100px; font-size: 2rem;">
+                                {% if user.first_name  %}
+                                    {{ user.first_name|first|upper }}
+                                {% else %}
+                                    {{ user.username|first|upper }}
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                        <div class="mt-2">
+                            <a href="{% url 'peak_wishlist:subir_avatar' %}" class="btn btn-sm btn-outline-primary rounded-pill">Cambiar foto</a>
+                        </div>
+                    </div>
+
+
                     <h2 class="text-center fw-bold mb-4">Actualiza tu perfil de Usuario ⛏️</h2>
 
                     <form method="post">
@@ -21,7 +40,7 @@
                         {% endfor %}
                         <div class="d-grid gap-2 mt-4">
                             <button type="submit" class="btn btn-primary btn-lg rounded-pill">
-                                Actualizr
+                                Actualizar
                             </button>
                         </div>
                     </form>

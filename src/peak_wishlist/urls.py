@@ -3,6 +3,8 @@ from django.views.generic import TemplateView
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.decorators import login_not_required # type:ignore
 from peak_wishlist.forms import CustomLoginForm
+from django.conf import settings
+from django.conf.urls.static import static
 
 from peak_wishlist.views import (
     excursion,
@@ -102,9 +104,13 @@ urlpatterns = [
     path("logout/", LogoutView.as_view(template_name="peak_wishlist/logout.html"), name="logout"),
     path("register/", user.CustomRegisterView.as_view(), name="register"),
     path("profile/", user.Profile.as_view(), name="profile"),
+    path("profile/avatar/", user.upload_avatar, name="subir_avatar"),
     path(
         "acerca-de/", 
         login_not_required(TemplateView.as_view(template_name="peak_wishlist/acerca_de.html")), 
         name="acerca_de"
     ),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,5 +1,5 @@
 from django import forms
-from peak_wishlist.models import Montana, Excursion, Refugio, Ruta, Parque, Proyecto
+from peak_wishlist.models import Montana, Excursion, Refugio, Ruta, Parque, Proyecto, Avatar
 from django.urls import reverse_lazy
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
@@ -257,5 +257,12 @@ class CustomLoginForm(AuthenticationForm):
         dar_estilo(self)
 
 
+class AvatarForm(forms.ModelForm):
+    class Meta:
+        model = Avatar
+        fields = ['imagen']
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        dar_estilo(self)
             

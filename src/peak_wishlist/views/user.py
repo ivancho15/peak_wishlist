@@ -3,10 +3,12 @@ from django.views.generic import (
     UpdateView,
 )
 from django.urls import reverse_lazy
-from peak_wishlist.forms import CustomUserCreationForm, UserProfileForm
+from peak_wishlist.forms import CustomUserCreationForm, UserProfileForm, AvatarForm
 from django.contrib.auth import get_user_model
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_not_required # type:ignore
+from django.shortcuts import render, redirect
+from peak_wishlist.models import Avatar
 
 
 @method_decorator(login_not_required, name='dispatch')
@@ -24,3 +26,18 @@ class Profile(UpdateView):
 
     def get_object(self):
         return self.request.user
+    
+
+
+def upload_avatar(request):
+    avatar, created = Avatar.objects.get_or_create(user=request.user)
+    
+    if request.method == 'POST':
+        form = AvatarForm(request.POST, request.FILES, instance=avatar)
+        if form.is_valid():
+            form.save()
+            return redirect('peak_wishlist:profile')
+    else:
+        form = AvatarForm(instance=avatar)
+        
+    return render(request, 'peak_wishlist/avatar.html', {'form': form})
