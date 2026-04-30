@@ -27,7 +27,8 @@ SECRET_KEY = 'django-insecure-gc8ug1kd#l3e5$w60$ufge!w!75djoxckb%au%=^q0q_b2+auu
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+#ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['ivnacho15.pythonanywhere.com']
 
 
 # Application definition
@@ -124,6 +125,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 
 LOGIN_REDIRECT_URL = 'peak_wishlist:index' 
