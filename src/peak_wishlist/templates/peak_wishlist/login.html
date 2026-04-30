@@ -1,0 +1,12 @@
+{% extends 'peak_wishlist/base.html' %}
+
+{% block contenido %}
+    <h1>Login</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Iniciar Sesión</button>
+    </form>
+    <p>¿No tienes una cuenta? Regístrate <a href="{% url 'peak_wishlist:register' %}">aquí</a></p>
+{% endblock contenido %}

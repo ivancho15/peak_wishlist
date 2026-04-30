@@ -1,5 +1,6 @@
 from django.urls import path
 from django.views.generic import TemplateView
+from django.contrib.auth.views import LoginView, LogoutView
 
 from peak_wishlist.views import (
     excursion,
@@ -9,6 +10,7 @@ from peak_wishlist.views import (
     proyecto,
     refugio,
     ruta,
+    user,
 )
 
 app_name = "peak_wishlist"
@@ -91,4 +93,8 @@ urlpatterns = [
         excursion.ExcursionList.as_view(),
         name="excursiones_por_montana",
     ),
+    path("login/", LoginView.as_view(template_name="peak_wishlist/login.html"), name="login"),
+    path("logout/", LogoutView.as_view(template_name="peak_wishlist/logout.html"), name="logout"),
+    path("register/", user.CustomRegisterView.as_view(), name="register"),
+    path("profile/", user.Profile.as_view(), name="profile"),
 ]

@@ -2,6 +2,10 @@ from django import forms
 from peak_wishlist.models import Montana, Excursion, Refugio, Ruta, Parque, Proyecto
 from django.urls import reverse_lazy
 from django.core.exceptions import ValidationError
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import get_user_model
+
 
 #Formulario Montaña
 class MontanaForm(forms.ModelForm):
@@ -13,7 +17,7 @@ class MontanaForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         
         #da estilos a los fields del formulario
-        dar_estilo(self, self.fields)
+        dar_estilo(self)
 
     def clean(self):
         cleaned_data = super().clean()
@@ -38,7 +42,7 @@ class RefugioForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         
         #da estilos a los fields del formulario
-        dar_estilo(self, self.fields)
+        dar_estilo(self)
 
 #Formulario Ruta
 class RutaForm(forms.ModelForm):
@@ -69,7 +73,7 @@ class RutaForm(forms.ModelForm):
             })
 
         #da estilos a los fields del formulario
-        dar_estilo(self, self.fields)
+        dar_estilo(self)
 
 #Formulario Parque
 class ParqueForm(forms.ModelForm):
@@ -81,13 +85,14 @@ class ParqueForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         
         #da estilos a los fields del formulario
-        dar_estilo(self, self.fields)
+        dar_estilo(self)
 
 #Formulario proyecto
 class ProyectoForm(forms.ModelForm):
     class Meta:
         model = Proyecto
         fields = "__all__"
+        exclude = ['usuario'] 
         widgets = {
                 'fecha_inicio': forms.DateInput(
                         attrs={'type': 'date', 'class': 'form-control rounded-pill'},
@@ -103,7 +108,7 @@ class ProyectoForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         
         #da estilos a los fields del formulario
-        dar_estilo(self, self.fields)
+        dar_estilo(self)
 
         if self.instance.pk:
             if self.instance.fecha_inicio:
@@ -117,6 +122,7 @@ class ExursionForm(forms.ModelForm):
     class Meta:
             model = Excursion
             fields = "__all__"
+            exclude = ['usuario'] 
             widgets = {
                 'fecha_hora_inicio': forms.DateTimeInput(
                         attrs={'type': 'datetime-local', 'class': 'form-control rounded-pill'},
@@ -141,7 +147,7 @@ class ExursionForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
         #da estilos a los fields del formulario
-        dar_estilo(self, self.fields)
+        dar_estilo(self)
 
         #fFiltra proyectos, solo proyectos no completados se le spuede añadir excursiones
         self.fields['proyecto'].queryset = Proyecto.objects.exclude(estado='Cumbre/Completado') #type: ignore
@@ -209,9 +215,25 @@ class ExursionForm(forms.ModelForm):
             })
         return cleaned_data
     
+
+
+class CustomUserCreationForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ("username", "password1", "password2")
+
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = get_user_model()
+        fields = ["username", "email", "first_name", "last_name"]
+
+
 # funcion para dar estilos
-def dar_estilo(self, fields: dict):
-        
+def dar_estilo(self):
+    """
+    Funcion para dar estilos, recibe el obfero formulario 
+    """
     for name, field in self.fields.items():
         if isinstance(field.widget, forms.Textarea):
             field.widget.attrs.update({'class': 'form-control rounded-4', 'rows': '3'})

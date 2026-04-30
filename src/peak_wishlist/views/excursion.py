@@ -162,6 +162,11 @@ class ExcursionCreate(CreateView):
     form_class = ExursionForm
     template_name = "peak_wishlist/excursion_form.html"
 
+    def form_valid(self, form):
+        form.instance.usuario = self.request.user
+        return super().form_valid(form)
+
+    
     def get_form_kwargs(self):
         # pasa la ID de la URL al formulario
         kwargs = super().get_form_kwargs()
