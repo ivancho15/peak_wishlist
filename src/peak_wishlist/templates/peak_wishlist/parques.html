@@ -15,9 +15,11 @@
     <a href="{{ url_volver }}" class="btn btn-outline-dark rounded-pill px-4">
         ← {{ volver_label }}
     </a>
+     {% if user.is_authenticated %}
     <a href="{% url 'peak_wishlist:registrar_parque' pais_id=view.pais.id %}" class="btn btn-dark rounded-pill shadow-sm">
         ➕ Registrar Parque
     </a>
+    {% endif %}
 </div>
 <h2 class="mb-4 text-dark fw-bold">🏞️Listado de Parques Nacionales y Areas Protegidas  {{ extension_titulo }}</h2>
 

@@ -11,7 +11,7 @@ from peak_wishlist.models import Pais, Parque
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_not_required # type:ignore
 
-method_decorator(login_not_required, name='dispatch')
+@method_decorator(login_not_required, name='dispatch')
 class ParqueList(ListView):
     model = Parque
     template_name = "peak_wishlist/parques.html"
@@ -64,7 +64,7 @@ class ParqueCreate(CreateView):
         )
         return context
 
-method_decorator(login_not_required, name='dispatch')
+@method_decorator(login_not_required, name='dispatch')
 class ParqueDetail(DetailView):
     model = Parque
     template_name = "peak_wishlist/parque_detail.html"
