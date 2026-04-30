@@ -30,25 +30,26 @@ class ExcursionList(ListView):
         ruta_id = self.kwargs.get("ruta_id")
         proyecto_id = self.kwargs.get("proyecto_id")
         montana_id = self.kwargs.get("montana_id")
+        user = self.request.user
 
         if ruta_id:
             self.filtro = get_object_or_404(Ruta, id=ruta_id)
-            queryset = Excursion.objects.filter(ruta=self.filtro).order_by(
+            queryset = Excursion.objects.filter(usuario=user).filter(ruta=self.filtro).order_by(
                 "-fecha_hora_inicio"
             )
         elif montana_id:
             self.filtro = get_object_or_404(Montana, id=montana_id)
-            queryset = Excursion.objects.filter(ruta__montana=self.filtro).order_by(
+            queryset = Excursion.objects.filter(usuario=user).filter(ruta__montana=self.filtro).order_by(
                 "-fecha_hora_inicio"
             )
         elif proyecto_id:
             self.filtro = get_object_or_404(Proyecto, id=proyecto_id)
-            queryset = Excursion.objects.filter(proyecto=self.filtro).order_by(
+            queryset = Excursion.objects.filter(usuario=user).filter(proyecto=self.filtro).order_by(
                 "-fecha_hora_inicio"
             )
         else:
             self.filtro = None
-            queryset = Excursion.objects.all().order_by("-fecha_hora_inicio")
+            queryset = Excursion.objects.filter(usuario=user).order_by("-fecha_hora_inicio")
 
         query = self.request.GET.get("q")
         if query:

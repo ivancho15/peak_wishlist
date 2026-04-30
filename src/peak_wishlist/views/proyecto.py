@@ -20,9 +20,13 @@ class ProyectoList(ListView):
     template_name = "peak_wishlist/proyectos.html"
     context_object_name = "proyectos"
     paginate_by = 10
+    
 
     def get_queryset(self) -> QuerySet[Any]:
-        queryset = Proyecto.objects.all().order_by("-fecha_inicio")
+
+        user = self.request.user
+        
+        queryset = Proyecto.objects.filter(usuario=user).order_by("-fecha_inicio")
 
         query = self.request.GET.get("q")
         if query:
