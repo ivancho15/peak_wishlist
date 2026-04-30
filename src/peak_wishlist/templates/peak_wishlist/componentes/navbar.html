@@ -28,7 +28,7 @@
                 
              {% endif %}   
             <li class="nav-item">
-             <a class="nav-link" href="#">Acerca de</a>
+             <a class="nav-link" href="{% url 'peak_wishlist:acerca_de' %}">Acerca de</a>
             </li>
             {% if user.is_authenticated %}
                 <li class="nav-item">

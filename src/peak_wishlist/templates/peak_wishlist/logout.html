@@ -1,7 +1,16 @@
 {% extends 'peak_wishlist/base.html' %}
 
 {% block contenido %}
-    <h1>Logout</h1>
-    <p>Has cerrado sesión</p>
-    <button><a href="{% url 'peak_wishlist:index' %}">ok</a></button>
+<div class="container py-5 text-center">
+    <div class="py-5">
+        <span style="font-size: 5rem;">🎒</span>
+        <h1 class="display-5 fw-bold mt-3">Sesión Finalizada</h1>
+        <p class="lead text-muted">Has guardado tu equipo y cerrado sesión correctamente.</p>
+        <div class="mt-4">
+            <a href="{% url 'peak_wishlist:index' %}" class="btn btn-primary btn-lg rounded-pill px-5">
+                Volver al Inicio
+            </a>
+        </div>
+    </div>
+</div>
 {% endblock contenido %}

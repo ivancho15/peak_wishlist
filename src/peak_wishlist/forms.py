@@ -3,8 +3,23 @@ from peak_wishlist.models import Montana, Excursion, Refugio, Ruta, Parque, Proy
 from django.urls import reverse_lazy
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import get_user_model
+
+
+# funcion para dar estilos
+def dar_estilo(self):
+    """
+    Funcion para dar estilos, recibe el obfero formulario 
+    """
+    for name, field in self.fields.items():
+        if isinstance(field.widget, forms.Textarea):
+            field.widget.attrs.update({'class': 'form-control rounded-4', 'rows': '3'})
+        elif isinstance(field.widget, forms.CheckboxInput):
+            field.widget.attrs.update({'class': 'form-check-input'})
+        else:
+            field.widget.attrs.update({'class': 'form-control rounded-pill'})
+
 
 
 #Formulario Montaña
@@ -214,7 +229,6 @@ class ExursionForm(forms.ModelForm):
                 'fecha_hora_fin': "La fecha de finalización no puede ser anterior a la fecha de inicio."
             })
         return cleaned_data
-    
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -222,24 +236,26 @@ class CustomUserCreationForm(UserCreationForm):
         model = User
         fields = ("username", "password1", "password2")
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        dar_estilo(self)
+
 
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = get_user_model()
         fields = ["username", "email", "first_name", "last_name"]
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        dar_estilo(self)
 
-# funcion para dar estilos
-def dar_estilo(self):
-    """
-    Funcion para dar estilos, recibe el obfero formulario 
-    """
-    for name, field in self.fields.items():
-        if isinstance(field.widget, forms.Textarea):
-            field.widget.attrs.update({'class': 'form-control rounded-4', 'rows': '3'})
-        elif isinstance(field.widget, forms.CheckboxInput):
-            field.widget.attrs.update({'class': 'form-check-input'})
-        else:
-            field.widget.attrs.update({'class': 'form-control rounded-pill'})
+
+class CustomLoginForm(AuthenticationForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        dar_estilo(self)
+
+
 
             

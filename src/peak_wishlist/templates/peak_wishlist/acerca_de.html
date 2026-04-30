@@ -1,0 +1,100 @@
+{% extends 'peak_wishlist/base.html' %}
+
+{% block title %} Acerca de - Peak Wishlist {% endblock title %}
+
+{% block contenido %}
+<div class="container py-5">
+    <!-- Encabezado -->
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <h1 class="display-4 fw-bold text-dark mb-4">Sobre Peak Wishlist 🏔️</h1>
+            <p class="lead text-muted">
+                Este proyecto nació de la pasión por las montañas y el deseo de organizar cada expedición hacia la cumbre.
+            </p>
+            <hr class="my-5 mx-auto" style="width: 100px; border-top: 3px solid #2c3e50;">
+        </div>
+    </div>
+
+    <div class="row g-4 mt-2">
+        <!-- Columna del Proyecto -->
+        <div class="col-md-6">
+            <div class="card h-100 border-0 shadow-sm rounded-4 p-4">
+                <div class="card-body">
+                    <h3 class="fw-bold mb-3 text-primary">El Proyecto</h3>
+                    <p>
+                        <strong>Peak Wishlist</strong> es una aplicación diseñada para montañistas que buscan llevar un registro detallado de sus proyectos, rutas y excursiones. 
+                        Permite gestionar información crítica como altitud, países, refugios y permisos de acceso.
+                    </p>
+                    <ul class="list-unstyled">
+                        <li>✅ Gestión de Proyectos de Montaña</li>
+                        <li>✅ Registro de Rutas y Dificultades</li>
+                        <li>✅ Control de Excursiones realizadas</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Columna del Autor -->
+        <div class="col-md-6">
+            <div class="card h-100 border-0 shadow-sm rounded-4 p-4 text-center">
+                <div class="card-body">
+                    <h3 class="fw-bold mb-3 text-primary">El Desarrollador</h3>
+                    <div class="mb-3">
+                        <span style="font-size: 4rem;">👨‍💻</span>
+                    </div>
+                    <p>
+                        Desarrollo inicial como proyecto final para el <strong>Curso de Python Coderhouse comisión 96125</strong>. 
+                        Enfocado en aplicar conocimientos de Django y Programación Orientada a Objetos.
+                    </p>
+                    <p class="fst-italic text-muted">
+                        "Esto apenas es el inicio, seguirá creciendo en función de la pasión y la colaboración."
+                    </p>
+                    <div class="mt-4">
+                        <a href="https://github.com/ivancho15" class="btn btn-outline-dark rounded-pill px-4">
+                            GitHub
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm rounded-4 p-4 bg-light">
+                <div class="card-body text-center">
+                    <h3 class="fw-bold mb-4 text-dark">Próximas Cumbres (Roadmap) 🚀</h3>
+                    <div class="row g-4 text-start">
+                        <!-- Red Social -->
+                        <div class="col-md-4">
+                            <div class="p-3 bg-white rounded-4 shadow-sm h-100">
+                                <h5 class="fw-bold text-primary">🏔️ Comunidad Montañera</h5>
+                                <p class="small text-muted">
+                                    Evolución hacia una <strong>red social especializada</strong>. Los usuarios podrán compartir sus cumbres logradas, publicar relatos fotográficos de sus expediciones y seguir el progreso de otros montañistas para inspirarse en nuevos desafíos.
+                                </p>
+                            </div>
+                        </div>
+                        <!-- Arquitectura -->
+                        <div class="col-md-4">
+                            <div class="p-3 bg-white rounded-4 shadow-sm h-100">
+                                <h5 class="fw-bold text-primary">⚙️ Arquitectura Avanzada</h5>
+                                <p class="small text-muted">
+                                    Refactorización hacia un <strong>Custom User Model</strong> que permita perfiles técnicos detallados, incluyendo experiencia en altura, equipo técnico disponible y estadísticas personales de ascenso.
+                                </p>
+                            </div>
+                        </div>
+                        <!-- Geolocalización -->
+                        <div class="col-md-4">
+                            <div class="p-3 bg-white rounded-4 shadow-sm h-100">
+                                <h5 class="fw-bold text-primary">🗺️ Mapas Interactivos</h5>
+                                <p class="small text-muted">
+                                    Integración con APIs de geolocalización para visualizar rutas, puntos de interés y cumbres conquistadas en un <strong>mapa dinámico global</strong>.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock contenido %}

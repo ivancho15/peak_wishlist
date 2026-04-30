@@ -2,6 +2,7 @@ from django.urls import path
 from django.views.generic import TemplateView
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.decorators import login_not_required # type:ignore
+from peak_wishlist.forms import CustomLoginForm
 
 from peak_wishlist.views import (
     excursion,
@@ -94,8 +95,16 @@ urlpatterns = [
         excursion.ExcursionList.as_view(),
         name="excursiones_por_montana",
     ),
-    path("login/", LoginView.as_view(template_name="peak_wishlist/login.html"), name="login"),
+    path("login/", LoginView.as_view(
+        template_name="peak_wishlist/login.html",
+        authentication_form=CustomLoginForm 
+    ), name="login"),
     path("logout/", LogoutView.as_view(template_name="peak_wishlist/logout.html"), name="logout"),
     path("register/", user.CustomRegisterView.as_view(), name="register"),
     path("profile/", user.Profile.as_view(), name="profile"),
+    path(
+        "acerca-de/", 
+        login_not_required(TemplateView.as_view(template_name="peak_wishlist/acerca_de.html")), 
+        name="acerca_de"
+    ),
 ]
