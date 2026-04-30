@@ -1,58 +1,66 @@
 🏔️ Peak Wishlist: Mountain & Summit Tracker
-Peak Wishlist es una plataforma integral diseñada para montañistas, excursionistas y escaladores. Permite catalogar montañas, rutas y refugios, funcionando como un asistente de planificación de expediciones y una bitácora digital de cumbres alcanzadas.
+Peak Wishlist es una plataforma integral diseñada para la comunidad montañera. Funciona como un asistente de planificación de expediciones y una bitácora digital, permitiendo a los usuarios transformar sus sueños de cumbre en registros históricos detallados.
+
+🧠 Lógica de Negocio y Permisos
+El sistema está diseñado bajo una jerarquía de datos que garantiza la integridad de la información geográfica y técnica:
+
+CRUDs de Usuario (Gestión Total): Actualmente, las entidades de Proyectos y Excursiones cuentan con un sistema CRUD (Create, Read, Update, Delete) completo para el usuario final. Esto se debe a que representan la actividad personal y privada del montañista (sus planes y sus logros).
+
+Entidades Estructurales (Lectura y Sugerencia): Las Montañas, Rutas, Áreas Protegidas y Refugios funcionan como una "Wiki" base de datos compartida.
+
+Estado actual: El usuario puede visualizar y consumir estos datos para crear sus planes.
+
+Visión a futuro: Para evitar la duplicidad de datos y garantizar la precisión técnica (altitudes exactas, coordenadas, etc.), el registro de nuevas montañas o rutas por parte de usuarios pasará por un sistema de moderación. Los usuarios podrán "sugerir" contenido, pero este deberá ser verificado por un administrador antes de ser oficial en la plataforma.
 
 🛠️ Tecnologías y Herramientas
 Framework: Django 5.x (Python)
 
-Estilos: Bootstrap 5.3 con personalización mediante CSS modular.
+Frontend: Bootstrap 5.3 con personalización mediante CSS modular.
+
+Autenticación: Sistema de usuarios con gestión de Avatares personalizados.
+
+Interactividad: Implementación de HTMX para filtrado dinámico de dificultades técnicas sin recargar la página.
 
 Librerías Especializadas:
 
-    django-money: Gestión profesional de divisas y presupuestos.
+django-money: Gestión profesional de divisas para presupuestos de expedición.
 
-    django-phonenumber-field: Validación de contactos internacionales.
+django-phonenumber-field: Validación de contactos internacionales para refugios.
 
-Diseño: UI/UX optimizada con asistencia de IA para componentes visuales.
-
-🧠 Arquitectura de Datos y Lógica de Negocio
-
+🏗️ Arquitectura de Datos
 El proyecto destaca por una estructura relacional robusta diseñada para escenarios geográficos reales:
 
-* Geografía Transfronteriza: Las montañas utilizan una relación Many-to-Many con los Países (ej. El Everest se vincula a Nepal y China).
+Geografía Transfronteriza: Relación Many-to-Many entre Montañas y Países (ej. El Everest se vincula a Nepal y China).
 
-* Jerarquía de Actividades: Una Excursión (salida al terreno) está vinculada a una Ruta específica, la cual a su vez pertenece a una Montaña.
+Jerarquía de Actividades: Una Excursión (evento temporal) se vincula a una Ruta específica, la cual pertenece a una Montaña.
 
-* Agrupación por Proyectos: Las excursiones pueden organizarse dentro de un Proyecto (Expedición de larga duración), permitiendo un seguimiento presupuestario y de objetivos.
+Agrupación por Proyectos: Permite agrupar múltiples excursiones bajo un mismo objetivo (ej. "Proyecto 7 Cumbres"), permitiendo seguimiento de estados (En progreso/Completado).
 
-* Entidades Complementarias: Gestión de Refugios (relación inversa con Montaña) y Áreas Protegidas/Parques con validación de permisos.
+🚀 Guía de Pruebas (Flujo de Integridad)
+Para validar el sistema, se recomienda el siguiente flujo de carga:
 
-🚀 Guía de Pruebas (Orden Sugerido)
-Para validar el flujo de integridad referencial de la aplicación, se sugiere seguir este orden en el Panel de Administración o en el Frontend:
+Países: Registrar los países base.
 
-* Países: Registrar los países base (ej. Argentina, Venezuela, España).
+Áreas Protegidas: Crear un Parque Nacional vinculado a un país.
 
-* Áreas Protegidas (Opcional): Crear un Parque Nacional vinculado a un país.
+Montañas: Registrar una cumbre vinculándola a países y parques.
 
-* Montañas: Registrar una cumbre vinculándola a uno o más países y un área protegida.
+Rutas: Definir una vía de ascenso (Ruta Normal, Directa, etc.).
 
-* Rutas: Definir una vía de ascenso para la montaña creada (ej. "Ruta Normal").
+Proyectos: Crear una expedición futura (ej. "Aconcagua 2026").
 
-* Proyectos: Crear una expedición futura (ej. "Inca Trail 2026").
+Excursiones: Registrar la salida final vinculando la Ruta elegida y el Proyecto correspondiente.
 
-* Excursiones: Registrar la salida final vinculando la Ruta y el Proyecto.
+🔮 Próximas Cumbres (Roadmap)
+Peak Wishlist está en constante ascenso. Los siguientes hitos incluyen:
+
+Comunidad Montañera: Evolución hacia una red social donde los usuarios puedan compartir sus relatos fotográficos y seguir el progreso de otros escaladores.
+
+Arquitectura Avanzada: Migración a un Custom User Model para perfiles técnicos detallados.
+
+Geolocalización: Integración con mapas interactivos para visualizar rutas y cumbres conquistadas de forma dinámica.
 
 📁 Estructura de Plantillas
-La aplicación utiliza un sistema de Herencia de Plantillas de Django:
+base.html: Esqueleto global con navegación dinámica según el estado de autenticación.
 
-* base.html: Contiene la lógica global, navegación, Bootstrap CDN y estilos CSS base.
-
-* templates/: Cada vista (Paises, Montañas, Proyectos, etc.) extiende del base, sobrescribiendo únicamente el bloque de contenido ({% block contenido %}).
-
-🔐 Credenciales de Acceso (Superusuario)
-Para acceder al panel de administración (/admin) y gestionar los modelos, utilice las siguientes credenciales:
-
-Usuario: admin
-
-Contraseña: CH_ijmm12345
-
-Enlace: http://127.0.0.1:8000/admin
+templates/: Organización modular donde cada vista extiende de la base, asegurando una UI consistente y ligera.
