@@ -14,6 +14,7 @@ from peak_wishlist.models import Proyecto
 from peak_wishlist.forms import ProyectoForm
 from django.urls import reverse_lazy
 
+
 class ProyectoList(ListView):
     model = Proyecto
     template_name = "peak_wishlist/proyectos.html"
@@ -34,6 +35,7 @@ class ProyectoList(ListView):
         context["url_volver"] = reverse_lazy("peak_wishlist:index")
         context["volver_label"] = "Volver al inicio"
         return context
+
 
 class ProyectoDetail(DetailView):
     model = Proyecto

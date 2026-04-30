@@ -7,9 +7,11 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, ListView
 
 from peak_wishlist.forms import MontanaForm
-from peak_wishlist.models import Montana, Pais, Parque
+from peak_wishlist.models import Montana, Pais, Parque 
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_not_required # type:ignore
 
-
+@method_decorator(login_not_required, name='dispatch')
 class MontanaList(ListView):
     model = Montana
     template_name = "peak_wishlist/montanas.html"
@@ -83,7 +85,7 @@ class MontanaCreate(CreateView):
         context["url_cancelar"] = reverse_lazy("peak_wishlist:montanas")
         return context
 
-
+@method_decorator(login_not_required, name='dispatch')
 class MontanaDetail(DetailView):
     model = Montana
     template_name = "peak_wishlist/montana_detail.html"

@@ -5,13 +5,16 @@ from django.views.generic import (
 from django.urls import reverse_lazy
 from peak_wishlist.forms import CustomUserCreationForm, UserProfileForm
 from django.contrib.auth import get_user_model
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_not_required # type:ignore
 
 
-
+@method_decorator(login_not_required, name='dispatch')
 class CustomRegisterView(CreateView):
     form_class = CustomUserCreationForm
     template_name = "peak_wishlist/register.html"
     success_url = reverse_lazy("peak_wishlist:login")
+
 
 class Profile(UpdateView):
     model = get_user_model()

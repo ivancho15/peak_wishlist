@@ -1,6 +1,7 @@
 from django.urls import path
 from django.views.generic import TemplateView
 from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.decorators import login_not_required # type:ignore
 
 from peak_wishlist.views import (
     excursion,
@@ -17,7 +18,7 @@ app_name = "peak_wishlist"
 
 urlpatterns = [
     path(
-        "", TemplateView.as_view(template_name="peak_wishlist/index.html"), name="index"
+        "",login_not_required(TemplateView.as_view(template_name="peak_wishlist/index.html")), name="index"
     ),
     path("paises/", pais.PaisList.as_view(), name="paises"),
     path('paises/continente/<str:continente>/', pais.PaisList.as_view(), name='paises_por_continente'),

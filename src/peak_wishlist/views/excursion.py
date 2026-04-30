@@ -95,6 +95,7 @@ class ExcursionList(ListView):
 
 
 # Detalle de Excrusion
+
 class ExcursionDetail(DetailView):
     model = Excursion
     template_name = "peak_wishlist/excursion_detail.html"

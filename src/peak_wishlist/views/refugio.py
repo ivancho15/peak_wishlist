@@ -8,8 +8,10 @@ from django.views.generic import CreateView, DetailView, ListView
 
 from peak_wishlist.forms import RefugioForm
 from peak_wishlist.models import Montana, Refugio
+from django.utils.decorators import method_decorator #
+from django.contrib.auth.decorators import login_not_required # type:ignore
 
-
+@method_decorator(login_not_required, name='dispatch')
 class RefugioList(ListView):
     model = Refugio
     template_name = "peak_wishlist/refugios.html"
@@ -77,7 +79,7 @@ class RefugioCreate(CreateView):
         context["url_cancelar"] = reverse_lazy("peak_wishlist:montanas")
         return context
 
-
+@method_decorator(login_not_required, name='dispatch')
 class RefugioDetail(DetailView):
     model = Refugio
     template_name = "peak_wishlist/refugio_detail.html"

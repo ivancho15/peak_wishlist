@@ -6,8 +6,10 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView
 
 from peak_wishlist.models import Pais
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_not_required # type:ignore
 
-
+@method_decorator(login_not_required, name='dispatch')
 class PaisList(ListView):
     model = Pais
     template_name = "peak_wishlist/paises.html"

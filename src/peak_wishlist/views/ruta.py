@@ -8,8 +8,10 @@ from django.views.generic import CreateView, DetailView, ListView
 
 from peak_wishlist.forms import RutaForm
 from peak_wishlist.models import Montana, Ruta
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_not_required # type:ignore
 
-
+@method_decorator(login_not_required, name='dispatch')
 class RutaList(ListView):
     model = Ruta
     template_name = "peak_wishlist/rutas.html"
@@ -72,7 +74,7 @@ class RutaCreate(CreateView):
         )
         return context
 
-
+@method_decorator(login_not_required, name='dispatch')
 class RutaDetail(DetailView):
     model = Ruta
     template_name = "peak_wishlist/ruta_detail.html"

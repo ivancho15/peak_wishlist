@@ -1,0 +1,55 @@
+   <nav class="navbar navbar-expand-lg navbar-dark shadow">
+      <div class="container">
+        <a class="navbar-brand" href="{% url 'peak_wishlist:index' %}">
+          🏔️ PEAK WISHLIST
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'peak_wishlist:index' %}">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'peak_wishlist:paises' %}">Países</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'peak_wishlist:montanas' %}">Montañas</a>
+            </li>
+            {% if user.is_authenticated %}
+                <li class="nav-item">
+                <a class="nav-link" href="{% url 'peak_wishlist:excursiones' %}">Mis Excursiones</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="{% url 'peak_wishlist:proyectos' %}">Mis Proyectos</a>
+                </li>
+                
+             {% endif %}   
+            <li class="nav-item">
+             <a class="nav-link" href="#">Acerca de</a>
+            </li>
+            {% if user.is_authenticated %}
+                <li class="nav-item">
+                    {# Corregido el enlace al perfil que estaba vacío #}
+                    <a class="nav-link" href="{% url 'peak_wishlist:profile' %}">{{ user.username }}</a>
+                </li>
+                <li class="nav-item">
+                    {# Formulario para Logout mediante POST #}
+                    <form id="logout-form" action="{% url 'peak_wishlist:logout' %}" method="post" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="nav-link btn btn-link text-decoration-none" style="padding: 0.5rem 1rem;">
+                            Logout
+                        </button>
+                    </form>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                <a class="nav-link" href="{% url 'peak_wishlist:login' %}"">Login | Registrate</a>
+                </li>
+            {% endif %}   
+          </ul>
+        </div>
+      </div>
+    </nav>
