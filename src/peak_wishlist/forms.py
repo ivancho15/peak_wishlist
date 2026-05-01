@@ -228,8 +228,17 @@ class ExursionForm(forms.ModelForm):
             raise ValidationError({  
                 'fecha_hora_fin': "La fecha de finalización no puede ser anterior a la fecha de inicio."
             })
-        return cleaned_data
+        
+        # validacion fecha proyecto
+        if self.instance.proyecto:
+            proyecto = cleaned_data.get('proyecto')
+            if (fecha_inicio.date() < proyecto.fecha_inicio or  fecha_inicio.date() > proyecto.fecha_fin ) or  (fecha_fin.date() < proyecto.fecha_inicio or fecha_fin.date() > proyecto.fecha_fin ): # type: ignore
+                raise ValidationError(
+                "Las fechas de la excursión deben estar dentro del rango del proyecto "
+                f"({proyecto.fecha_inicio} a {proyecto.fecha_fin})." # type: ignore
+            )
 
+        return cleaned_data
 
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
